@@ -1,3 +1,4 @@
+<%@page import="carseller.model.User"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -7,6 +8,56 @@
 <title>Main Page</title>
 </head>
 <body>
-	<h1>Hello World</h1>
+	<jsp:useBean id="userBean" class="carseller.controller.UserBean" scope="request"></jsp:useBean>
+	
+	<div >
+		<fieldset>
+			<legend>Search Form</legend>
+
+			<form action="SearchServletUser" method="GET">
+				<div >
+					<div >
+						<% if (request.getParameter("searchedValue") == null) { %>
+							<input type="text" class="form-control" autocomplete="on" placeholder="Search..."  name="searchedValue">
+						<%} else { %>
+							<input type="text" class="form-control" value="<%=request.getParameter("searchedValue") %>"  name="searchedValue">
+						<% } %>
+					</div>
+				</div>
+
+				<div >
+					<button type="submit">Search</button>
+				</div>
+			</form>
+		</fieldset>
+		<div >
+			<ul >
+				<%
+					
+					for (User user : userBean.getUsers()) {
+				%>
+
+				<li >
+					<div >
+
+						<div >
+							<h3><%=user.getUsername()%></h3>
+
+							Name:
+							<%=user.getName()%><br /> Forename:
+							<%=user.getForename()%><br /> Email:
+							<%=user.getEmail()%><br /> 
+						</div>
+
+					</div>
+				</li>
+
+				<%
+					}
+				%>
+
+			</ul>
+		</div>
+	</div>
 </body>
 </html>

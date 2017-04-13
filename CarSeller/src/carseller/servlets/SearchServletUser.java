@@ -1,7 +1,6 @@
 package carseller.servlets;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import carseller.controller.UserBean;
 
 /**
- * Servlet implementation class MainServlet
+ * Servlet implementation class SearchServletUser
  */
-@WebServlet("/main")
-public class MainServlet extends HttpServlet {
+@WebServlet("/SearchServletUser")
+public class SearchServletUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MainServlet() {
+    public SearchServletUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,15 +28,17 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String searchValue = request.getParameter("searchedValue");
+		System.out.println("YESS " + searchValue);
 		
 		UserBean bean = new UserBean();
-		
-		bean.getAllUser(1);
-		
 		request.setAttribute("userBean", bean);
-		request.setAttribute("searchType", "");
+		if(searchValue == null)
+			bean.getAllUser(1);
+		else
+			bean.getUserByUsername(1, searchValue);
 		
-		request.getRequestDispatcher("/main.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/movies.jsp").forward(request, response);
 	}
 
 	/**

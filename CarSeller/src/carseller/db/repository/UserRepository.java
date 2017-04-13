@@ -100,6 +100,21 @@ public class UserRepository {
 		return users;
 	}
 	
+	public int countPagesForAll(){
+		String selectUsers = "SELECT COUNT(*) FROM users";
+		int counter = 0;
+		try{
+			ResultSet rs = connection.createStatement().executeQuery(selectUsers);
+			while(rs.next()){
+				counter = (int) Math.round(rs.getDouble(1) / UserRepository.PAGINATION_SIZE);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+			System.out.println("UserRepository exception at db");
+		}
+		return counter;
+	}
+	
 	public List<User> getAllUsersByUsernameAtPage(int pageNumber, String username){
 		String selectUsers = "(SELECT id, name, forename, username, email, phone_number "
 						   + "FROM users WHERE LOWER(username) LIKE LOWER('" + username + "'))";
@@ -118,6 +133,21 @@ public class UserRepository {
 			System.out.println("UserRepository exception at db");
 		}
 		return users;
+	}
+	
+	public int countPageByCriterion(String username){
+		String selectUsers = "(SELECT COUNT(*) FROM users WHERE LOWER(username) LIKE LOWER('" + username + "'))";
+		int counter = 0;
+		try{
+			ResultSet rs = connection.createStatement().executeQuery(selectUsers);
+			while(rs.next()){
+				counter = (int) Math.round(rs.getDouble(1) / UserRepository.PAGINATION_SIZE);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+			System.out.println("UserRepository exception at db");
+		}
+		return counter;
 	}
 	
 }
