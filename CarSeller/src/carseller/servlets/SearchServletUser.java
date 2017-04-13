@@ -29,16 +29,21 @@ public class SearchServletUser extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String searchValue = request.getParameter("searchedValue");
-		System.out.println("YESS " + searchValue);
+		int page = 1;
+		try{
+			page = Integer.parseInt(request.getParameter("page"));
+		}catch(NumberFormatException e){
+			System.out.println("Number format exception");
+		}
 		
 		UserBean bean = new UserBean();
 		request.setAttribute("userBean", bean);
-		if(searchValue == null)
-			bean.getAllUser(1);
+		if(searchValue == null || searchValue.equals(""))
+			bean.getAllUser(page);
 		else
-			bean.getUserByUsername(1, searchValue);
+			bean.getUserByUsername(page, searchValue);
 		
-		getServletContext().getRequestDispatcher("/movies.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/main.jsp").forward(request, response);
 	}
 
 	/**

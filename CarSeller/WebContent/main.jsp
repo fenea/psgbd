@@ -18,9 +18,20 @@
 				<div >
 					<div >
 						<% if (request.getParameter("searchedValue") == null) { %>
+							Search: 
 							<input type="text" class="form-control" autocomplete="on" placeholder="Search..."  name="searchedValue">
 						<%} else { %>
+							Search: 
 							<input type="text" class="form-control" value="<%=request.getParameter("searchedValue") %>"  name="searchedValue">
+						<% } %>
+					</div>
+					<div>
+						<% if (request.getParameter("page") == null) { %>
+							Page:
+							<input type="text" class="form-control" autocomplete="on" placeholder=<%=userBean.getPagesNumber() %>  name="page">
+						<%} else { %>
+							Page:
+							<input type="text" class="form-control" value="<%=request.getParameter("page") %>"  name="page">
 						<% } %>
 					</div>
 				</div>
