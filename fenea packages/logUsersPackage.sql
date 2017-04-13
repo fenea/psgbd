@@ -14,7 +14,7 @@ function login(usernam varchar , pass varchar) return int as
 passDB varchar2(256);
 begin
  select password into passDB from Users where username like usernam;
-  if pass = passDB then
+  if rawtohex(dbms_crypto.hash(to_clob(pass), 3)) = passDB then
   return 1;
   end if;
   return 0;
@@ -27,7 +27,7 @@ end;
 function signup(name varchar, forename varchar,username varchar, email varchar ,pass varchar , phoneNumber varchar ) return int as
 begin
        /* create sequence SEQUENCE userID INCREMENT BY 1 START WITH 10000 */
-  insert into Users values ( userIDseq.nextval ,  name, forename,username, email , pass, phoneNumber);
+  insert into Users values ( userID.nextval ,  name, forename,username, email , rawtohex(dbms_crypto.hash(to_clob(pass), 3)), phoneNumber);
   return 1;
 exception
 when DUP_VAL_ON_INDEX then

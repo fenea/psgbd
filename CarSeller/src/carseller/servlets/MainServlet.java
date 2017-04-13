@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import carseller.db.DatabaseConnection;
 import carseller.db.repository.CarRepository;
+import carseller.db.repository.UserRepository;
 import carseller.model.Car;
+import carseller.model.User;
 import oracle.jdbc.OracleTypes;
 
 /**
@@ -38,7 +40,7 @@ public class MainServlet extends HttpServlet {
 		/*CarRepository cr = new CarRepository();
 		List<Car> cars = cr.getAllCars();
 		for(Car car : cars)
-			System.out.println(car);*/
+			System.out.println(car);
 		try {
 			CallableStatement cs = DatabaseConnection.getConnection().prepareCall("{ call ? := loguser.signup(?, ?, ?, ?, ?, ?) }");
 			cs.setString(2, "Rusu");
@@ -58,7 +60,11 @@ public class MainServlet extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+		UserRepository ur = new UserRepository();
+		List<User> users = ur.getAllUsersByUsernameAtPage(1, "gigel') or ('a' = 'a");
+		for(User user : users)
+			System.out.println(user);
 		request.getRequestDispatcher("/main.jsp").forward(request, response);
 	}
 
