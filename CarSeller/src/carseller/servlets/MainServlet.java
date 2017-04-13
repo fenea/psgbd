@@ -2,6 +2,7 @@ package carseller.servlets;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import carseller.db.DatabaseConnection;
+import carseller.db.repository.CarRepository;
+import carseller.model.Car;
 import oracle.jdbc.OracleTypes;
 
 /**
@@ -32,25 +35,10 @@ public class MainServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Connection connection = DatabaseConnection.getConnection();
-		try {
-			CallableStatement cstmt = connection.prepareCall("{ call suggestion.suggestion_on_car_page(?, ?, ?) }");
-			cstmt.registerOutParameter(1, OracleTypes.CURSOR);
-			cstmt.setInt(2, 1);
-			cstmt.setInt(3, 1);
-			cstmt.executeUpdate();
-			ResultSet rs = (ResultSet)cstmt.getObject(1);
-			while(rs.next()){
-				System.out.println(rs.getInt(1) + " - " +
-								   rs.getString(2) + " - " + 
-								   rs.getInt(6) + " - " + 
-								   rs.getInt(13));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		CarRepository cr = new CarRepository();
+		List<Car> cars = cr.getAllCars();
+		for(Car car : cars)
+			System.out.println(car);
 		request.getRequestDispatcher("/main.jsp").forward(request, response);
 	}
 

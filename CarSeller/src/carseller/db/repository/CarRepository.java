@@ -15,15 +15,15 @@ public class CarRepository {
 		Car car = new Car();
 		
 		car.setId(rs.getInt("id"));
-		car.setTitle(rs.getString("title"));
+		car.setTitle(rs.getString(2));
 		car.setYear(rs.getInt("release_year"));
 		car.setPrice(rs.getDouble("price"));
-		car.setModel(rs.getString("m.make") + " " + rs.getString("m.model"));
-		car.setFuel(rs.getString("f.fuel_type"));
+		car.setModel(rs.getString("make") + " " + rs.getString("model"));
+		car.setFuel(rs.getString(15));
 		car.setMileage(rs.getInt("mileage"));
-		car.setBody(rs.getString("t.body_types"));
+		car.setBody(rs.getString("body_type"));
 		car.setDoorNumber(rs.getInt("doors_number"));
-		car.setColor(rs.getString("cl.color"));
+		car.setColor(rs.getString("color"));
 		car.setEngineCapacity(rs.getInt("engine_capacity"));
 		car.setOwner(rs.getInt("user_id"));
 		return car;
@@ -32,10 +32,10 @@ public class CarRepository {
 	public List<Car> getAllCars(){
 		List<Car> cars = new LinkedList<>();
 		Connection connection = DatabaseConnection.getConnection();
-		String query = "SELECT * FROM cars c JOIN fuel f ON c.fuel_type = f.id JOIN"
-								   + "types t ON c.body_type_id = t.id JOIN"
-								   + "colors cl ON c.color = cl.id JOIN"
-								   + "models m ON c.model_id = m.id";
+		String query = "SELECT * FROM (SELECT * FROM cars c JOIN fuel f ON c.fuel_type = f.id JOIN "
+								   + "types t ON c.body_type_id = t.id JOIN "
+								   + "colors cl ON c.color = cl.id JOIN "
+								   + "models m ON c.model_id = m.id) WHERE ROWNUM < 30";
 		try{
 			ResultSet rs = connection.createStatement().executeQuery(query);
 			while(rs.next()){
@@ -45,7 +45,7 @@ public class CarRepository {
 			e.printStackTrace();
 			System.out.println("CarRepository exception at db");
 		}
-		return null;
+		return cars;
 	}
 	
 }

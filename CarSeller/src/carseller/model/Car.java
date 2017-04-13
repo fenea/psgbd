@@ -101,4 +101,11 @@ public class Car {
 		}
 		return false;
 	}
+	
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		sb.append(title + " - " + model + " - " + fuel);
+		return sb.toString();
+	}
 }
