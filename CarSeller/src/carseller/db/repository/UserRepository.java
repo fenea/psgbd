@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class UserRepository {
 	public UserRepository(){
 		this.connection = DatabaseConnection.getConnection();
 	}
-	public boolean insert(User user){
+	public int insert(User user){
 		
 		try {
 			CallableStatement cs = connection.prepareCall("{ call ? := loguser.signup(?, ?, ?, ?, ?, ?) }");
@@ -31,15 +32,14 @@ public class UserRepository {
 			cs.setString(7, user.getPhoneNumber());
 			cs.registerOutParameter(1, OracleTypes.INTEGER);
 			cs.executeUpdate();
-			int res = cs.getInt(1);
-			return res == 1;
+			return cs.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			return -1;
 		}
 	}
 	
-	public boolean updatePassword(int id, String oldPassword, String newPassword){
+	public int updatePassword(int id, String oldPassword, String newPassword){
 		try {
 			CallableStatement cs = connection.prepareCall("{ call ? := loguser.update_password(?, ?, ?) }");
 			cs.setInt(2, id);
@@ -47,11 +47,10 @@ public class UserRepository {
 			cs.setString(4, newPassword);
 			cs.registerOutParameter(1, OracleTypes.INTEGER);
 			cs.executeUpdate();
-			int res = cs.getInt(1);
-			return res == 1;
+			return cs.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			return -1;
 		}
 	}
 	
@@ -148,6 +147,17 @@ public class UserRepository {
 			System.out.println("UserRepository exception at db");
 		}
 		return counter;
+	}
+	
+	public void delete(int id){
+		String query = "DELETE FROM USERS WHERE id = " + id;
+		try {
+			Statement stmt = connection.createStatement();
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

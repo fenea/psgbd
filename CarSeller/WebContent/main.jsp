@@ -53,8 +53,9 @@
 
 						<div >
 							<h3><%=user.getUsername()%></h3>
-
-							Name:
+							
+							Id:
+							<%=Integer.toString(user.getId())%><br />Name:
 							<%=user.getName()%><br /> Forename:
 							<%=user.getForename()%><br /> Email:
 							<%=user.getEmail()%><br /> 
