@@ -13,7 +13,7 @@ public class CarRepository {
 
 	private Car mapTupleToCar(ResultSet rs) throws SQLException{
 		Car car = new Car();
-		
+		// covention for parameters
 		car.setId(rs.getInt("id"));
 		car.setTitle(rs.getString(2));
 		car.setYear(rs.getInt("release_year"));

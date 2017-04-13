@@ -35,10 +35,30 @@ public class MainServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		CarRepository cr = new CarRepository();
+		/*CarRepository cr = new CarRepository();
 		List<Car> cars = cr.getAllCars();
 		for(Car car : cars)
-			System.out.println(car);
+			System.out.println(car);*/
+		try {
+			CallableStatement cs = DatabaseConnection.getConnection().prepareCall("{ call ? := loguser.signup(?, ?, ?, ?, ?, ?) }");
+			cs.setString(2, "Rusu");
+			cs.setString(3, "Bogdan");
+			cs.setString(4, "username");
+			cs.setString(5, "username@yahoo.ro");
+			cs.setString(6, "parola");
+			cs.setString(7, "0752011851");
+			cs.registerOutParameter(1, OracleTypes.INTEGER);
+			cs.executeUpdate();
+			int res = cs.getInt(1);
+			if(res == -1){
+				System.out.println("Error, exception on db");
+			}
+			else 
+				System.out.println("everything ok");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		request.getRequestDispatcher("/main.jsp").forward(request, response);
 	}
 

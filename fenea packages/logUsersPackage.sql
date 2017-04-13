@@ -28,6 +28,7 @@ function signup(name varchar, forename varchar,username varchar, email varchar ,
 begin
        /* create sequence SEQUENCE userID INCREMENT BY 1 START WITH 10000 */
   insert into Users values ( userIDseq.nextval ,  name, forename,username, email , pass, phoneNumber);
+  return 1;
 exception
 when DUP_VAL_ON_INDEX then
  DBMS_OUTPUT.PUT_LINE('unique constraint violated');
