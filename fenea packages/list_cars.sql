@@ -25,9 +25,11 @@ begin
     end if;
     return stmt;
 end;
+
 function getPrice (minPrice number, maxPrice number) return varchar as
   sir varchar2(256);
 begin
+  sir:=NULL;
   if minPrice != 0 then
    sir := ' price>= ' || to_char(minPrice) ;
    if(maxPrice  !=0) then
@@ -92,17 +94,18 @@ end;
 function getSegment(my_column varchar, minim number, maxim number) return varchar as
   sir varchar(256);
 begin
+  sir := NULL;
   if minim != 0 then
    sir :=  my_column || ' >= ' || to_char(minim);
      if(maxim != 0) then
         sir:= sir || ' and ' || my_column || ' <= ' || to_char(maxim);
      end if;
-  end if;
-  if (maxim  !=0) then
-    sir :=  my_column || ' <= ' || to_char(maxim);
-    return sir;
-  end if;
-  sir := NULL;
+  ELSE
+      if (maxim  !=0) then
+        sir :=  my_column || ' <= ' || to_char(maxim);
+      end if;
+  END IF ;
+
   return sir;
 end;
 
@@ -126,16 +129,16 @@ started:=0;
  my_column:='price';
   DBMS_OUTPUT.PUT_LINE(stmt);
  tempstmt := getSegment(my_column, minPrice , maxPrice);
- if(tempstmt not like ' ') then
+ if(tempstmt is not NULL) then
    stmt :=stmt || ' where '  || tempstmt;
    started:=1;
  end if;
 
  my_column:='mileage';
  tempstmt:= getSegment(my_column, minMileage, maxMileage) ;
- if(tempstmt!=NULL ) then
+ if(tempstmt is not NULL ) then
    if(started = 0) then
-    stmt :=stmt || ' where '  || tempstmt;
+    stmt := stmt || ' where '  || tempstmt;
      started:=1;
     else
       stmt :=stmt ||  ' and ' || tempstmt;
@@ -144,7 +147,8 @@ started:=0;
 
  my_column:='engine_capacity';
  tempstmt:= getSegment(my_column,minEngineCapacity,maxEngineCapacity);
- if(tempstmt!=NULL ) then
+  DBMS_OUTPUT.PUT_LINE(tempstmt);
+ if(tempstmt is not NULL ) then
    if(started = 0) then
      stmt := stmt || ' where '  || tempstmt;
      started:=1;
@@ -154,27 +158,18 @@ started:=0;
  end if;
 
  tempstmt := getBodyType(body_type);
- if(tempstmt !=NULL ) then
+ if(tempstmt is not NULL ) then
    if(started = 0) then
      stmt := stmt || 'where ' || tempstmt;
      started:=1;
     else
-      stmt := stmt || 'and ' ||  tempstmt;
-    end if;
- end if;
-
- tempstmt:= getBodyType(body_type);
- if(tempstmt not like ' ') then
-   if(started = 0) then
-     stmt := stmt || 'where ' || tempstmt;
-     started:=1;
-    else
-      stmt := stmt ||  ' and ' || tempstmt;
+      stmt := stmt || ' and ' ||  tempstmt;
     end if;
  end if;
 
  tempstmt:= getColor(color);
- if(tempstmt not like ' ') then
+
+ if(tempstmt is not NULL ) then
    if(started = 0) then
      stmt := stmt || ' where ' || tempstmt;
      started:=1;
@@ -184,7 +179,7 @@ started:=0;
  end if;
 
   tempstmt:= getFuelType(fuel_type);
- if(tempstmt not like ' ') then
+ if(tempstmt is not NULL) then
    if(started = 0) then
      stmt := stmt || ' where ' || tempstmt;
      started:=1;
