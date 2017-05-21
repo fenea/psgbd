@@ -1,6 +1,5 @@
 create or replace package suggestion as
     type ret_cursor is ref cursor;
-    type fkeys is table of number index by varchar2(30);
     type preferences is table of number index by pls_integer;
     type approximation is record (mini NUMBER(9, 0) := 999999999, 
                                   maxi NUMBER(9, 0) := 0);
@@ -69,7 +68,6 @@ create or replace package body suggestion as
         v_year_interval approximation;
         v_task_complete NUMBER;
         v_empty NUMBER := 1;
-        res fkeys;
     begin
         for v_line in (select * from history where user_id = p_user_id) loop
             v_empty := 0;
@@ -85,14 +83,10 @@ create or replace package body suggestion as
         end loop;
         
         if(v_empty = 0) then
-            res('model_id') := get_key_with_max_value(v_models);
-            res('fuel_type') := get_key_with_max_value(v_fuel);
-            res('body_type') := get_key_with_max_value(v_body);
-            res('color') := get_key_with_max_value(v_color);
-            update preferences set
-                model_id = res('model_id'),
-                fuel_type = res('fuel_type'),
-                body_type = res('body_type'),
+        /*    update preferences set
+                model_id = get_key_with_max_value(v_models),
+                fuel_type = get_key_with_max_value(v_fuel),
+                body_type = get_key_with_max_value(v_body),
                 min_price = v_price_interval.mini,
                 max_price = v_price_interval.maxi,
                 engine_capacity_min = v_engine_capacity_interval.mini,
@@ -101,17 +95,16 @@ create or replace package body suggestion as
                 max_year = v_year_interval.maxi,
                 max_milage = v_mileage_interval.maxi,
                 min_milage = v_mileage_interval.mini,
-                color = res('color')
+                color = get_key_with_max_value(v_color)
             where user_id = p_user_id;
-            
             v_task_complete := sql%rowcount;
-          
+          */  
             if (v_task_complete = 0) then
                 insert into preferences values(
                     p_user_id,
-                    res('v_models'),
-                    res('v_fuel'),
-                    res('v_body'),
+                    get_key_with_max_value(v_models),
+                    get_key_with_max_value(v_fuel),
+                    get_key_with_max_value(v_body),
                     v_price_interval.mini,
                     v_price_interval.maxi,
                     v_engine_capacity_interval.mini,
@@ -120,7 +113,7 @@ create or replace package body suggestion as
                     v_year_interval.maxi,
                     v_mileage_interval.maxi,
                     v_mileage_interval.mini,
-                    res('v_color')
+                    get_key_with_max_value(v_color)
                 );
             end if;
         end if;
