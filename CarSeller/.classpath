@@ -13,6 +13,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="E:/facultate/facultate 2/sem 2/PA/lab9/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="jars/ojdbc6.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
