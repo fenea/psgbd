@@ -7,14 +7,14 @@
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/header.css">
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<div class="page-header jumbotron" style="margin: 0px; padding-top: 30px; background-color: #849128">
-	<h1 style="padding-left: 10px"> Welcome to CarSeller </h1>
-    <p>Un text random</p>
+<div class="page-header jumbotron page-header-custom" >
+	<h1 class = "text-header-align"> Welcome to CarSeller </h1>
 </div>
 
 <nav class="navbar navbar-default">

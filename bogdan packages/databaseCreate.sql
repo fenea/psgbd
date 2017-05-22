@@ -76,6 +76,7 @@ CREATE TABLE Users (
 	email VARCHAR2(255),
 	password VARCHAR2(255),
 	phone_number VARCHAR2(255),
+	token VARCHAR2(255),
 	constraint USERS_PK PRIMARY KEY (ID)
 
 );
