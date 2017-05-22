@@ -1,5 +1,5 @@
 create or replace Package logUser IS
-function login(usernam varchar , pass varchar) return int;
+function login(usernam varchar , pass varchar ) return int;
 function signup(name varchar, forename varchar,username varchar, email varchar ,pass varchar , phoneNumber varchar ) return int;
 function update_password(userID int,oldPass varchar, newPass varchar) return int;
 /*function updateForename(userID int, newForename varchar) return int; */
