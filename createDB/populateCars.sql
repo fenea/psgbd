@@ -1,4 +1,6 @@
-set serveroutput on
+/*set serveroutput on
+
+ */
 declare
 type names is varray(1000) of varchar(20);
 
@@ -12,6 +14,12 @@ type names is varray(1000) of varchar(20);
   carmodel number;
   forename names;
   surname names;
+  v_year number(5, 0);
+  v_fuel number(2, 0);
+  v_color number;
+  v_type number;
+
+  count_models number(9,0);
 
 begin
   ind :=1;
@@ -23,10 +31,16 @@ begin
  /*  prodyear := TRUNC(DBMS_RANDOM.VALUE(1900,2017));   */
  price := TRUNC(DBMS_RANDOM.VALUE(1,500000));
   userID := TRUNC(DBMS_RANDOM.VALUE(1,10001));
-  carmodel := TRUNC(DBMS_RANDOM.VALUE(1185, 4612));
+  v_fuel := TRUNC(DBMS_RANDOM.VALUE(1,5));
+  v_type := TRUNC(DBMS_RANDOM.VALUE(1,9));
+  v_color := TRUNC(DBMS_RANDOM.VALUE(1,7));
+  v_year := TRUNC(DBMS_RANDOM.VALUE(1990,2017));
+     select count(*) into count_models from MODELS;
+  carmodel := TRUNC(DBMS_RANDOM.VALUE(0,count_models ));
   engine := TRUNC(DBMS_RANDOM.VALUE(100,6000));
   mileage := TRUNC(DBMS_RANDOM.VALUE(1,1000000));
-  insert into cars (id, title, price, model , mileage ,engine_capacity,user_id) values (ind , surname(nrRand) , price ,carmodel , mileage ,engine,userID);
+
+  insert into cars (id, title, release_year, price, model_id, fuel_type , mileage, body_type_id, color ,engine_capacity,user_id  ) values (ind , surname(nrRand), v_year , price ,carmodel, v_fuel , mileage, v_type, v_color ,engine,userID);
    ind:=ind+1;
    exit when ind = 11000;
    end loop;
