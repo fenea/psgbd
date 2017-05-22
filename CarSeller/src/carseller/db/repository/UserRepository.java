@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -54,19 +55,32 @@ public class UserRepository {
 		}
 	}
 	
-	public boolean login(User user){
+	
+	/*
+	 * @param username: User's username
+	 * @param password: User's password
+	 * @param token: a String generated with purpose to indentify a session of a user
+	 * @return If login is successful then will return a token
+	 * 				- if user is logged on another device then will return a token that exist in db
+	 * 				- else will return @param token
+	 * 		   Else will return null
+	 */
+	public String login(String username, String password, String token){
 		try {
-			CallableStatement cs = connection.prepareCall("{ call ? := loguser.login(?, ?) }");
-			cs.setString(2, user.getUsername());
-			cs.setString(3, user.getPassword());
+			CallableStatement cs = connection.prepareCall("{ call ? := loguser.login(?, ?, ?) }");
+			cs.setString(2, username);
+			cs.setString(3, token);
 			cs.registerOutParameter(1, OracleTypes.INTEGER);
-			cs.executeUpdate();
+			cs.registerOutParameter(4, Types.VARCHAR);
+			cs.setString(4, token);
+			cs.execute();
 			int res = cs.getInt(1);
-			return res == 1;
+			if(res == 1)
+				return cs.getString(4);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
 		}
+		return null;
 	}
 	
 	private User mapTupleToUser(ResultSet rs) throws SQLException{
