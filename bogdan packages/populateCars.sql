@@ -1,4 +1,6 @@
-set serveroutput on
+/*set serveroutput on
+
+ */
 declare
 type names is varray(1000) of varchar(20);
 
@@ -17,6 +19,8 @@ type names is varray(1000) of varchar(20);
   v_color number;
   v_type number;
 
+  count_models number(9,0);
+
 begin
   ind :=1;
    forename :=names('Aaren', 'Abbey', 'Abigael', 'Adah', 'Addi', 'Adela', 'Adelice', 'Adelle', 'Adina', 'Adrea', 'Adriane', 'Aeriel', 'Agace', 'Aggie', 'Agnese', 'Aida', 'Ailee', 'Ailina', 'Aimee', 'Ainslie', 'Alanah', 'Albertina', 'Aleece', 'Alene', 'Alexa', 'Alexina', 'Alfreda', 'Alice', 'Alie', 'Alis', 'Alisun', 'Allegra', 'Allina', 'Allsun', 'Allys', 'Almeta', 'Aloysia', 'Alvina', 'Alys', 'Alyss', 'Amalee', 'Amalle', 'Amara', 'Ambur', 'Ameline', 'Amil', 'Amye', 'Anabelle', 'Anastasia', 'Andeee', 'Andrea', 'Andriana', 'Anet', 'Angel', 'Angelika', 'Angelle', 'Anica', 'Anjela', 'Anna-Diane', 'Annabell', 'Annalee', 'Anne', 'Annelise', 'Annice', 'Annmarie', 'Ansley', 'Anthiathia', 'Antonie', 'April', 'Arabele', 'Ardeen', 'Arden', 'Ardisj', 'Ardyth', 'Ariel', 'Arlee', 'Arleta', 'Arlina', 'Arlyn', 'Ashien', 'Ashleigh', 'Ashly', 'Atalanta', 'Auberta', 'Aubrie', 'Audre', 'Audy', 'Aundrea', 'Aurelia', 'Aurlie', 'Austina', 'Averyl', 'Avril', 'Babb', 'Babs', 'Barbabra', 'Barbee', 'Barbra', 'Basia', 'Beatrisa', 'Becka', 'Beilul', 'Belicia', 'Bellanca', 'Bendite', 'Benita', 'Berenice', 'Bernadette', 'Bernelle', 'Bernice', 'Berrie', 'Bertha', 'Bertine', 'Bessie', 'Bethena', 'Bette', 'Bettina', 'Bev', 'Beverly', 'Bibby', 'Bidget', 'Billy', 'Bird', 'Blaire', 'Blanch', 'Blinny', 'Blondelle', 'Bobbee', 'Bobbye', 'Bonita', 'Bonny', 'Brandi', 'Breanne', 'Brena', 'Bria', 'Bridget', 'Brigid', 'Brina', 'Brit', 'Britta', 'Britte', 'Brook', 'Bryana', 'Brynne', 'Cacilia', 'Caitrin', 'Calli', 'Cam', 'Cami', 'Cammi', 'Candice', 'Candra', 'Caren', 'Carey', 'Carilyn', 'Carissa', 'Carleen', 'Carlin', 'Carlotta', 'Carlynne', 'Carmelina', 'Carmencita', 'Caro', 'Carolann', 'Caroline', 'Caron', 'Carroll', 'Casandra', 'Cassandra', 'Cassi', 'Cate', 'Cathe', 'Cathi', 'Cathrine', 'Catie', 'Catrina', 'Cecelia', 'Cecilla', 'Celesta', 'Celestyn', 'Celinda', 'Celle', 'Chandra', 'Charin', 'Charity', 'Charlene', 'Charmain', 'Charmion', 'Chelsea', 'Chere', 'Cherida', 'Cherise', 'Cherry', 'Chiarra', 'Chlo', 'Chrissie', 'Christal', 'Christen', 'Christie', 'Christye', 'Chryste', 'Cilka', 'Cindi', 'Cissiee', 'Clarabelle', 'Clarette', 'Clarie', 'Clarita', 'Claudette', 'Clea', 'Clementine', 'Clerissa', 'Clotilda', 'Cody', 'Colleen', 'Colline', 'Concordia', 'Constance', 'Constantina', 'Cora', 'Coralie', 'Cordey', 'Coreen', 'Corette', 'Corina', 'Corissa', 'Cornelle', 'Corri', 'Corrinne', 'Cosette', 'Crin', 'Cristabel', 'Cristin', 'Crysta', 'Cybil', 'Cyndia', 'Cynthie', 'Dacy', 'Dagmar', 'Daisie', 'Dalila', 'Damita', 'Dani', 'Daniele', 'Danit', 'Danny', 'Daphene', 'Darbie', 'Darcie', 'Darelle', 'Darleen', 'Darrelle', 'Daryl', 'Dasya', 'Davida', 'Dawna', 'Deana', 'Debbi', 'Debi', 'Dede', 'Deeann', 'Deeyn', 'Del', 'Delila', 'Delly', 'Delphine', 'Demetris', 'Denna', 'Denys', 'Desiree', 'Devin', 'Devonna', 'Dian', 'Dianemarie', 'Didi', 'Dinah', 'Dionis', 'Dniren', 'Doe', 'Dolly', 'Dominga', 'Donella', 'Donielle', 'Donny', 'Doralynn', 'Dorella', 'Dorette', 'Dorice', 'Dorise', 'Dorotea', 'Dorree', 'Dorthea', 'Doti', 'Dreddy', 'Drucie', 'Drusilla', 'Dulcia', 'Dulcy', 'Dyane', 'Dynah', 'Ealasaid', 'Ebonee', 'Eddy', 'Edi', 'Editha', 'Edy', 'Eilis', 'Elaine', 'Elbertina', 'Electra', 'Elenore', 'Elfrida', 'Elicia', 'Elisabet', 'Elissa', 'Elka', 'Ellen', 'Ellissa', 'Elna', 'Elonore', 'Elset', 'Elspeth', 'Elvira', 'Elysha', 'Emalee', 'Emeline', 'Emili', 'Emlyn', 'Emmaline', 'Emmey', 'Emogene', 'Enrica', 'Eolande', 'Ericha', 'Erinn', 'Ermina', 'Ernesta', 'Esmaria', 'Essy', 'Estella', 'Estrellita', 'Etheline', 'Ettie', 'Eugine', 'Eustacia', 'Evangelina', 'Eveleen', 'Evie', 'Evy', 'Faina', 'Fanchon', 'Fanni', 'Farah', 'Farrand', 'Fawn', 'Faye', 'Faythe', 'Felice', 'Felisha', 'Ferdinanda', 'Fernandina', 'Fidela', 'Filia', 'Fionna', 'Flo', 'Florella', 'Florette', 'Florina', 'Florry', 'Flss', 'Francine', 'Frank', 'Franny', 'Freddie', 'Frederique', 'Freida', 'Gabbi', 'Gabriel', 'Gabriellia', 'Gail', 'Garnette', 'Gaye', 'Gaylene', 'Geneva', 'Genni', 'Genvieve', 'Georgeta', 'Georgianna', 'Geralda', 'Gerianna', 'Germana', 'Gert', 'Gertruda', 'Giana', 'Gilberte', 'Gill', 'Gilligan', 'Ginger', 'Giorgia', 'Gisele', 'Giulietta', 'Gladys', 'Glenn', 'Gloria', 'Glynda', 'Golda', 'Goldina', 'Grata', 'Grazia', 'Grete', 'Grier', 'Guenna', 'Guinevere', 'Gussi', 'Gustie', 'Gwendolyn', 'Gwennie', 'Gwyneth', 'Haily', 'Halie', 'Hally', 'Hannie', 'Harley', 'Harmony', 'Harrietta', 'Hattie', 'Heather', 'Hedi', 'Hedy', 'Helaine', 'Helenka', 'Helsa', 'Henrieta', 'Hermia', 'Herta', 'Hetti', 'Hildagard', 'Hildy', 'Hollie', 'Honor', 'Hortensia', 'Hyacinthia', 'Ibby', 'Idell', 'Ilene', 'Ilse', 'Imogen', 'Ines', 'Ingaberg', 'Inger', 'Iolanthe', 'Irene', 'Isa', 'Isadora', 'Isobel', 'Ivette', 'Izabel', 'Jacinthe', 'Jacklyn', 'Jaclyn', 'Jacquenetta', 'Jacquie', 'Jaimie', 'Jammie', 'Jandy', 'Janel', 'Janenna', 'Janette', 'Janie', 'Janith', 'Janot', 'Jaquenette', 'Jayme', 'Jean', 'Jeanie', 'Jeannie', 'Jemima', 'Jena', 'Jeniece', 'Jenn', 'Jennica', 'Jenny', 'Jerrie', 'Jerrylee', 'Jessamine', 'Jessica', 'Jewell', 'Jillayne', 'Jillie', 'Jo-Ann', 'Joanie', 'Jobey', 'Jobye', 'Jocelyne', 'Joeann', 'Joelle', 'Joete', 'Johnath', 'Jolee', 'Jolie', 'Jonell');
@@ -31,10 +35,12 @@ begin
   v_type := TRUNC(DBMS_RANDOM.VALUE(1,9));
   v_color := TRUNC(DBMS_RANDOM.VALUE(1,7));
   v_year := TRUNC(DBMS_RANDOM.VALUE(1990,2017));
-  carmodel := TRUNC(DBMS_RANDOM.VALUE(1185, 4612));
+     select count(*) into count_models from MODELS;
+  carmodel := TRUNC(DBMS_RANDOM.VALUE(0,count_models ));
   engine := TRUNC(DBMS_RANDOM.VALUE(100,6000));
   mileage := TRUNC(DBMS_RANDOM.VALUE(1,1000000));
-  insert into cars (id, title, release_year, price, model_id, fuel_type , mileage, body_type_id, color ,engine_capacity,user_id) values (ind , surname(nrRand), v_year , price ,carmodel, v_fuel , mileage, v_type, v_color ,engine,userID);
+
+  insert into cars (id, title, release_year, price, model_id, fuel_type , mileage, body_type_id, color ,engine_capacity,user_id  ) values (ind , surname(nrRand), v_year , price ,carmodel, v_fuel , mileage, v_type, v_color ,engine,userID);
    ind:=ind+1;
    exit when ind = 11000;
    end loop;
