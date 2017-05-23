@@ -8,8 +8,6 @@
 		  <meta name="viewport" content="width=device-width, initial-scale=1">
 		  <link rel="stylesheet" href="css/bootstrap.min.css">
 		   <link rel="stylesheet" href="css/header.css">
-		  <script src="js/jquery.min.js"></script>
-		  <script src="js/bootstrap.min.js"></script>
 		<title>Login</title>
 	</head>
 <body>
@@ -17,10 +15,10 @@
 		<h1 class = "text-header-align"> Welcome to CarSeller </h1>
 	</div>
 	
-	<div class="container-fluid container-distance" style="width:70%">
+	<div class="container-width container-fluid container-distance">
 		<div class="jumbotron">
 			<h2 class="text-center">Login</h2>
-		  	<form action="/login" method="post">
+		  	<form action="login" method="post">
 		    <div class="form-group">
 		      	<label for="username">Username:</label>
 		      	<input type="email" class="form-control" id="username" placeholder="Enter username" name="username">
@@ -29,9 +27,30 @@
 		      	<label for="pwd">Password:</label>
 		      	<input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
 		    </div>
+		    <%
+		    {
+		    	String status = (String)request.getAttribute("status");
+		    	if(status == null || status.equals("true")){
+		    %>
+		    	<div class="display-none">
+
+		    <%
+		    	}else{
+		    %>
+		    	<div>
+		    <%
+		    	}}
+		    %>
+		    	<div class="alert alert-danger alert-dismissable">
+		    		<a href="" class="close" data-dismiss="alert" aria-label="close">×</a>
+		    		<strong>Wrong username or password</strong>
+		 	 	</div>
+		  	</div>
 		    <button type="submit" class="btn btn-default">Submit</button>
 		  </form>
 		</div>
 	</div>
+	<script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

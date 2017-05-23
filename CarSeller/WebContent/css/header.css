@@ -11,3 +11,13 @@
 .container-distance{
 	margin-top: 20px;
 }
+@media (min-width: 580px){
+	.container-width{
+		width: 70% !important;
+	}
+}
+
+
+.display-none{
+	display: none
+}
