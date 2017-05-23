@@ -47,5 +47,32 @@ public class CarRepository {
 		}
 		return cars;
 	}
+
+
+	public List<Car> searchCars(String string,int page){
+		List<Car> cars = new LinkedList<>();
+		Connection connection = DatabaseConnection.getConnection();
+
+
+		try {
+			CallableStatement cs = connection.prepareCall("{ call ? := QUERYCARS.SEARCH_CARS(?, ?) }");
+			cs.setString(2, string);
+			cs.setInt(3, page);
+			cs.registerOutParameter(1, OracleTypes.CURSOR);
+			cs.executeUpdate();
+			ResultSet rs = (ResultSet) cs.getObject(1);
+
+
+			while (rs.next()) {
+				cars.add(this.mapTupleToCar(rs));
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+
+		return cars;
+	}
 	
 }
