@@ -25,4 +25,12 @@ public class UserService {
 		return userRepo.login(username, password, token);
 	}
 	
+	/*
+	 * @param username: User's username to be checked if exists in db
+	 * @return true if exist, false otherwise
+	 */
+	public boolean checkUsernameExistence(String username){
+		return userRepo.checkUsernameExistence(username);
+	}
+	
 }

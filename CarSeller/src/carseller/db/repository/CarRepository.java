@@ -1,5 +1,6 @@
 package carseller.db.repository;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import carseller.db.DatabaseConnection;
 import carseller.model.Car;
+import oracle.jdbc.OracleTypes;
 
 public class CarRepository {
 

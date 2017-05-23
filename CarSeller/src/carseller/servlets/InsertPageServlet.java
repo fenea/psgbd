@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import carseller.properties.Printer;
+import carseller.service.ServiceFactory;
+
 /**
  * Servlet implementation class InsertPageServlet
  */
@@ -26,7 +29,17 @@ public class InsertPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String username = request.getParameter("username");
+		Printer.printDebugMsg("InsertPageServlet - doGet", "url: " + request.getRequestURL().toString());
+		Printer.printDebugMsg("InsertPageServlet - doGet", username + " " + request.getParameterValues("username"));
+		if(username != null){
+			boolean res = ServiceFactory.getUserService().checkUsernameExistence(username);
+			if(res)
+				response.setStatus(HttpServletResponse.SC_OK);
+			else
+				response.setStatus(HttpServletResponse.SC_ACCEPTED);
+			return;
+		}
 		request.getRequestDispatcher("/insert-user.jsp").forward(request, response);
 	}
 

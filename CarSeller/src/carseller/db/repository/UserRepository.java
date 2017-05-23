@@ -11,6 +11,7 @@ import java.util.List;
 
 import carseller.db.DatabaseConnection;
 import carseller.model.User;
+import carseller.properties.Printer;
 import oracle.jdbc.OracleTypes;
 
 public class UserRepository {
@@ -172,6 +173,20 @@ public class UserRepository {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public boolean checkUsernameExistence(String username){
+		try {
+			CallableStatement cs = connection.prepareCall("SELECT id FROM users WHERE username = ?");
+			cs.setString(1, username);
+			ResultSet rs = cs.executeQuery();
+			boolean ret = rs.next();
+			Printer.printDebugMsg("UserRepository - checkUsernameExistence", ret);
+			return !ret;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 }
