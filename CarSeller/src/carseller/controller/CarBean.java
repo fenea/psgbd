@@ -4,7 +4,6 @@ import java.util.List;
 
 import carseller.db.repository.CarProprietiesRepository;
 import carseller.model.Car;
-import carseller.model.CarMake;
 
 public class CarBean {
 	public  List<String>getMake(){

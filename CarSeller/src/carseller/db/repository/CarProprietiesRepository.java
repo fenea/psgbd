@@ -7,14 +7,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import carseller.db.DatabaseConnection;
-import carseller.model.CarMake;
 
 public class CarProprietiesRepository {
 	
 	public static List<String> getMake(){
 		List<String> listCarMake = new LinkedList<>();
 		
-		int iterator = 1;
 		Connection connection = DatabaseConnection.getConnection();
 		String query = "SELECT make from manufacturers";
 		try{

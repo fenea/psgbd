@@ -11,10 +11,9 @@ public class ModelBean {
 		List<String> makes = CarProprietiesRepository.getMake();
 		return makes;
 	}
-public List<String> getModelsByMakeName(String make){
-	List<String> models = CarProprietiesRepository.getModels(make);
-	return models;
 	
-	
-}
+	public List<String> getModelsByMakeName(String make){
+		List<String> models = CarProprietiesRepository.getModels(make);
+		return models;
+	}
 }
