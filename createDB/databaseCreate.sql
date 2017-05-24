@@ -51,7 +51,7 @@ CREATE TABLE Cars (
 	title VARCHAR2(100),
 	release_year NUMBER(5, 0),
 	profile_photo blob,
-	price NUMBER(9, 0),
+	price NUMBER(10, 2),
 	model_id NUMBER(9, 0),
 	fuel_type NUMBER(9, 0),
 	mileage NUMBER(9, 0),
@@ -162,3 +162,29 @@ ALTER TABLE Comments ADD CONSTRAINT Comments_fk1 FOREIGN KEY (author_id) REFEREN
 
 ALTER TABLE Preferences ADD CONSTRAINT Preferences_fk0 FOREIGN KEY (user_id) REFERENCES Users(ID);
 ALTER TABLE Preferences ADD CONSTRAINT Preferences_fk1 FOREIGN KEY (model_id) REFERENCES Models(ID);
+
+
+
+
+CREATE  SEQUENCE  users_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER users_trig
+BEFORE INSERT ON USERS
+FOR EACH ROW
+BEGIN
+  SELECT users_seq.NEXTVAL
+  INTO   :new.id
+  FROM   dual;
+END;
+
+CREATE SEQUENCE cars_seq start with 1;
+
+CREATE OR REPLACE TRIGGER cars_trig
+BEFORE INSERT ON CARS
+FOR EACH ROW
+BEGIN
+  SELECT cars_seq.NEXTVAL
+  INTO   :new.id
+  FROM   dual;
+END;
+

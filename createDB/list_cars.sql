@@ -2,7 +2,9 @@ create or replace Package queryCars IS
 
 
 function list_cars(minPrice number, maxPrice number,
-      minMileage number, maxMileage number, minEngineCapacity number, maxEngineCapacity number, make varchar,model varchar,body_type varchar, color varchar,
+      minMileage number, maxMileage number, minEngineCapacity number,
+  maxEngineCapacity number, make varchar,model varchar,body_type varchar,
+  color varchar,
       fuel_type varchar ,pageNr number) return SYS_REFCURSOR;
 
 
