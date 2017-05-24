@@ -3426,3 +3426,8 @@ insert into models values(3424,'Jaguar','XK Series');
 insert into models values(3425,'Jaguar','X-Type');
 insert into models values(3426,'Jeep','Grand Cherokee');
 insert into models values(3427,'Jeep','Liberty');
+/
+COMMIT /
+
+
+create materialized view manufacturers as select distinct make from models;
