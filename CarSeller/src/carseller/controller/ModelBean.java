@@ -8,8 +8,13 @@ public class ModelBean {
 
 	public  List<String>getAllMakes(){
 		
-		List<String> cars = CarProprietiesRepository.getMake();
-		return cars;
-		
+		List<String> makes = CarProprietiesRepository.getMake();
+		return makes;
 	}
+public List<String> getModelsByMakeName(String make){
+	List<String> models = CarProprietiesRepository.getModels(make);
+	return models;
+	
+	
+}
 }
