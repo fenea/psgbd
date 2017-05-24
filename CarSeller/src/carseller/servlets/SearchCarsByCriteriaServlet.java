@@ -1,6 +1,9 @@
 package carseller.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import carseller.controller.CarBean;
 import carseller.controller.ModelBean;
 import carseller.controller.UserBean;
+import carseller.properties.Printer;
 
 /**
  * Servlet implementation class SearchCarsByCriteriaServlet
@@ -30,12 +34,23 @@ public class SearchCarsByCriteriaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String make = request.getParameter("make");
 		ModelBean bean = new ModelBean();
+		if(make != null){
+			Printer.printDebugMsg("get models by make", make);
+			PrintWriter writer = response.getWriter();
+			List<String> models = bean.getModelsByMakeName(make);
+			for(String model : models){
+				writer.println(model);
+			}
+			response.setStatus(HttpServletResponse.SC_OK);
+			return;
+		}
 		
 		bean.getAllMakes();
 		
 		request.setAttribute("CarBean", bean);
-		request.getRequestDispatcher("/search.jsp").forward(request, response);
+		request.getRequestDispatcher("insert-car.jsp").forward(request, response);
 	}
 
 	/**

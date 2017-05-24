@@ -14,13 +14,13 @@ import carseller.service.ServiceFactory;
  * Servlet implementation class InsertPageServlet
  */
 @WebServlet("/insert-user")
-public class InsertPageServlet extends HttpServlet {
+public class UserFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertPageServlet() {
+    public UserFormServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

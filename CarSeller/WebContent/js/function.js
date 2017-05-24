@@ -44,3 +44,24 @@ function validateForm(){
 	}
 	return true;
 }
+
+function addModels(){
+	var makeComboBox = document.getElementById("make");
+	var currentVal = makeComboBox.options[makeComboBox.selectedIndex].value;
+	
+	var xhttp = new XMLHttpRequest();
+	var url = "search?make=" + encodeURI(currentVal);
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200){
+			var model = document.getElementById("model");
+			var i = 0, models = this.responseText.split("\n");
+			var inner = "";
+			for(i = 0; i < models.length - 1; ++i){
+				inner += "<option>" + models[i] + "</option>";
+			}
+			model.innerHTML = inner;
+		}
+	};
+	xhttp.open("GET", url, false);
+	xhttp.send();
+}

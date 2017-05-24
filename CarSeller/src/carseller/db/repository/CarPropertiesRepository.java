@@ -1,5 +1,6 @@
 package carseller.db.repository;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import carseller.db.DatabaseConnection;
-import carseller.model.CarMake;
 
 public class CarPropertiesRepository {
 	
@@ -32,16 +32,18 @@ public class CarPropertiesRepository {
 	public static List<String> getModels(String make) {
 		List<String> listCarModels = new LinkedList<>();
 		Connection connection = DatabaseConnection.getConnection();
-		String query = "SELECT model from models where make like " + make;
+		String query = "SELECT model FROM models WHERE LOWER(make) = LOWER(?)";
 		try{
 			
-			ResultSet rs = connection.createStatement().executeQuery(query);
+			CallableStatement cs = connection.prepareCall(query);
+			cs.setString(1, make);
+			ResultSet rs = cs.executeQuery();
 			while(rs.next()){
-				listCarModels.add(rs.getString("Make"));
+				listCarModels.add(rs.getString("MODEL"));
 			}
 		}catch(SQLException e){
 		
-			System.out.println("get Model exception at db");
+			System.out.println("get Model exception at db " + e);
 		}
 		return listCarModels;
 	}
