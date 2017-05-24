@@ -17,7 +17,7 @@ import carseller.properties.Printer;
 /**
  * Servlet implementation class SearchCarsByCriteriaServlet
  */
-@WebServlet("/search")
+@WebServlet("/makes")
 public class SearchCarsByCriteriaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -34,8 +34,8 @@ public class SearchCarsByCriteriaServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String make = request.getParameter("make");
-		ModelBean bean = new ModelBean();
 		if(make != null){
+			ModelBean bean = new ModelBean();
 			Printer.printDebugMsg("get models by make", make);
 			PrintWriter writer = response.getWriter();
 			List<String> models = bean.getModelsByMakeName(make);
@@ -45,15 +45,7 @@ public class SearchCarsByCriteriaServlet extends HttpServlet {
 			response.setStatus(HttpServletResponse.SC_OK);
 			return;
 		}
-		
-		bean.getAllMakes();
-		PropertiesBean propBean = new PropertiesBean();
-		propBean.allBodyTypes();
-		propBean.allColors();
-		propBean.allFuelTypes();
-		request.setAttribute("modelBean", bean);
-		request.setAttribute("propertiesBean", propBean);
-		request.getRequestDispatcher("insert-car.jsp").forward(request, response);
+		response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 	}
 
 	/**

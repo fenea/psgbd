@@ -8,7 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import carseller.db.DatabaseConnection;
+import carseller.model.BodyType;
 import carseller.model.Car;
+import carseller.model.Fuel;
+import carseller.model.Model;
+import carseller.model.Color;
 import oracle.jdbc.OracleTypes;
 
 public class CarRepository {
@@ -20,12 +24,12 @@ public class CarRepository {
 		car.setTitle(rs.getString(2));
 		car.setYear(rs.getInt("release_year"));
 		car.setPrice(rs.getDouble("price"));
-		car.setModel(rs.getString("make") + " " + rs.getString("model"));
-		car.setFuel(rs.getString(15));
+		car.setModel(new Model(rs.getString("make"), rs.getString("model")));
+		car.setFuel(new Fuel(rs.getString(15)));
 		car.setMileage(rs.getInt("mileage"));
-		car.setBody(rs.getString("body_type"));
+		car.setBody(new BodyType(rs.getString("body_type")));
 		car.setDoorNumber(rs.getInt("doors_number"));
-		car.setColor(rs.getString("color"));
+		car.setColor(new Color(rs.getString("color")));
 		car.setEngineCapacity(rs.getInt("engine_capacity"));
 		car.setOwner(rs.getInt("user_id"));
 		return car;

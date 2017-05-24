@@ -24,7 +24,7 @@
 	<div class="container-width container-fluid container-distance">
 		<div class="jumbotron">
 			<h2 class="text-center">Car form</h2>
-		  	<form action="login" method="post" style="padding-top: 30px">
+		  	<form action="CarForm" method="post" style="padding-top: 30px">
 			    <div class="form-inline" >
 			    	<div class="form-group col-xs-6" style="padding: 0">
 			    	<label for="make">Select make:</label>
@@ -94,7 +94,7 @@
 			    		<%
 						for (BodyType bodyType : propertiesBean.getBodyTypes()) {
 						%>
-							<option value="<%=bodyType.getId()%>"> <%=bodyType.getBodyType()%></option>
+							<option > <%=bodyType.getBodyType()%></option>
 						<%}%>
 			    	</select>
 			    </div>
@@ -107,7 +107,7 @@
 			    		<%
 						for (Fuel fuel : propertiesBean.getFuelTypes()) {
 						%>
-							<option value="<%=fuel.getId()%>"> <%=fuel.getFuel()%></option>
+							<option> <%=fuel.getFuel()%></option>
 						<%}%>
 			    	</select>
 			    	</div>
@@ -118,11 +118,12 @@
 				    		<%
 							for (Color color : propertiesBean.getColors()) {
 							%>
-								<option value="<%=color.getId()%>"> <%=color.getColor()%></option>
+								<option> <%=color.getColor()%></option>
 							<%}%>
 					    	</select>
 			    	</div>
 			    </div>
+			    <button type="submit" class="btn btn-success">Submit</button>
 		  </form>
 		</div>
 		

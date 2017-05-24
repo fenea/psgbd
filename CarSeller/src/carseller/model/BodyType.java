@@ -1,5 +1,7 @@
 package carseller.model;
 
+import carseller.validator.Validator;
+
 public class BodyType {
 
 	int id;
@@ -7,6 +9,10 @@ public class BodyType {
 	
 	public BodyType(){
 		
+	}
+	
+	public BodyType(String bodyType){
+		setBodyType(bodyType);
 	}
 	
 	public BodyType(int id, String bodyType){
@@ -27,6 +33,8 @@ public class BodyType {
 	}
 
 	public void setBodyType(String bodyType) {
+		if(!Validator.isValid(bodyType))
+			throw new IllegalArgumentException("Bad bodyType argument");
 		this.bodyType = bodyType;
 	}
 	

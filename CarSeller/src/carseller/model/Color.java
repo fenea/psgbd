@@ -1,5 +1,7 @@
 package carseller.model;
 
+import carseller.validator.Validator;
+
 public class Color {
 
 	int id;
@@ -7,6 +9,10 @@ public class Color {
 	
 	public Color(){
 		
+	}
+	
+	public Color(String color){
+		setColor(color);
 	}
 	
 	public Color(int id, String color){
@@ -24,6 +30,8 @@ public class Color {
 		return color;
 	}
 	public void setColor(String color) {
+		if(!Validator.isValid(color))
+			throw new IllegalArgumentException("Bad color argument");
 		this.color = color;
 	}
 	

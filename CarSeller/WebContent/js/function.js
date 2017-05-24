@@ -50,7 +50,7 @@ function addModels(){
 	var currentVal = makeComboBox.options[makeComboBox.selectedIndex].value;
 	
 	var xhttp = new XMLHttpRequest();
-	var url = "search?make=" + encodeURI(currentVal);
+	var url = "makes?make=" + encodeURI(currentVal);
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200){
 			var model = document.getElementById("model");
