@@ -10,9 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import carseller.controller.CarBean;
 import carseller.controller.ModelBean;
-import carseller.controller.UserBean;
+import carseller.controller.PropertiesBean;
 import carseller.properties.Printer;
 
 /**
@@ -48,8 +47,12 @@ public class SearchCarsByCriteriaServlet extends HttpServlet {
 		}
 		
 		bean.getAllMakes();
-		
-		request.setAttribute("CarBean", bean);
+		PropertiesBean propBean = new PropertiesBean();
+		propBean.allBodyTypes();
+		propBean.allColors();
+		propBean.allFuelTypes();
+		request.setAttribute("modelBean", bean);
+		request.setAttribute("propertiesBean", propBean);
 		request.getRequestDispatcher("insert-car.jsp").forward(request, response);
 	}
 
