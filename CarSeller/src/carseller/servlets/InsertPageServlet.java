@@ -30,10 +30,12 @@ public class InsertPageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
-		Printer.printDebugMsg("InsertPageServlet - doGet", "url: " + request.getRequestURL().toString());
-		Printer.printDebugMsg("InsertPageServlet - doGet", username + " " + request.getParameterValues("username"));
+		
 		if(username != null){
+			long startTime = System.currentTimeMillis();
 			boolean res = ServiceFactory.getUserService().checkUsernameExistence(username);
+			long endTime = System.currentTimeMillis();
+			Printer.printDebugMsg("InsertPageServlet - doGet", "Time: " + (endTime - startTime));
 			if(res)
 				response.setStatus(HttpServletResponse.SC_OK);
 			else

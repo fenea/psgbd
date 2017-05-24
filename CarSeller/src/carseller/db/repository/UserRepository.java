@@ -175,6 +175,10 @@ public class UserRepository {
 		
 	}
 	
+	/*
+	 * @param username: User's username to be checked
+	 * @return true if exist, false otherwise
+	 */
 	public boolean checkUsernameExistence(String username){
 		try {
 			CallableStatement cs = connection.prepareCall("SELECT id FROM users WHERE username = ?");
@@ -187,6 +191,30 @@ public class UserRepository {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	public boolean isAuthenticated(String username, String token) {
+		try {
+			CallableStatement cs = connection.prepareCall("{ call ? := loguser.auth_test(?, ?) }");
+			cs.setString(2, username);
+			cs.setString(3, token);
+			cs.registerOutParameter(1, OracleTypes.INTEGER);
+			cs.executeUpdate();
+			int res = cs.getInt(1);
+			return res == 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public void signOut(String username) {
+		try {
+			CallableStatement cs = connection.prepareCall("UPDATE users SET token = null WHERE username = ?");
+			cs.setString(1, username);
+			cs.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
