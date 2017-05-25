@@ -1,5 +1,5 @@
 create or replace Package logUser IS
-function login(usernam varchar , pass varchar ) return int;
+function login(usernam varchar , pass varchar ,tok  VARCHAR2) return VARCHAR2;
 function signup(name varchar, forename varchar,username varchar, email varchar ,pass varchar , phoneNumber varchar ) return int;
 function update_password(userID int,oldPass varchar, newPass varchar) return int;
 /*function updateForename(userID int, newForename varchar) return int; */
@@ -7,21 +7,29 @@ function update_password(userID int,oldPass varchar, newPass varchar) return int
 END logUser;
 
 
-
-
 CREATE OR REPLACE PACKAGE BODY logUser IS
-function login(usernam varchar , pass varchar) return int as
-passDB varchar2(256);
+function login(usernam varchar , pass varchar ,tok  VARCHAR2) return VARCHAR2 as
+ passDB varchar2(256);
+ tokenDB varchar(255);
+ returned_token VARCHAR2(256);
 begin
  select password into passDB from Users where username like usernam;
   if rawtohex(dbms_crypto.hash(to_clob(pass), 3)) = passDB then
-  return 1;
+   select token into tokenDB from USERS where USERNAME like usernam;
+   if  tokenDB is NULL THEN
+    update Users set token = tok where username like usernam;
+    returned_token:=tok;
+    ELSE
+    returned_token :=tokenDB;
+   END IF;
+  return returned_token;
   end if;
-  return 0;
+  return NULL ;
+
   exception
   WHEN no_data_found THEN
   DBMS_OUTPUT.PUT_LINE('no data found');
-  return -1;
+  return NULL;
 end;
 
 function signup(name varchar, forename varchar,username varchar, email varchar ,pass varchar , phoneNumber varchar ) return int as
