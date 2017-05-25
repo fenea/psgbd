@@ -40,6 +40,31 @@ public class CarRepository {
 		return car;
 	}
 
+	public Car getCarById(int id){
+		String query = "select c.ID, TITLE, RELEASE_YEAR, f.FUEL_TYPE, " 
+							+ "MILEAGE, PRICE, DOORS_NUMBER, ENGINE_CAPACITY, " 
+							+ "c.USER_ID, t.BODY_TYPE, co.COLOR, MAKE, MODEL, "
+							+ "u.USERNAME from users u join cars c on c.user_id = u.id "
+							+ "join fuel f on f.id = c.fuel_type "
+							+ "join colors co on co.id = c.color " 
+							+ "join types t on t.id = c.body_type_id "
+							+ "join models m on m.id = c.model_id "
+							+ "where c.id = " + id;
+		Connection connection = DatabaseConnection.getConnection();
+		Car car = new Car();
+		try{
+			ResultSet rs = connection.createStatement().executeQuery(query);
+			if(!rs.next())
+				return car;
+			car = mapTupleToCar(rs);
+			rs.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+			Printer.printErrorMsg("CarRepository - getCarById", e);
+		}
+		return car;
+	}
+	
 	public List<Car> getAllCars(int lastId, String comparator){
 		List<Car> cars = new LinkedList<>();
 		Connection connection = DatabaseConnection.getConnection();

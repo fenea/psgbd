@@ -11,9 +11,14 @@ import carseller.service.ServiceFactory;
 public class CarBean {
 	
 	List<Car> cars;
+	Car car;
 	
 	public List<Car> getCars(){
 		return cars;
+	}
+	
+	public Car getCar(){
+		return car;
 	}
 	
 	public  List<String>getMake(){
@@ -42,5 +47,9 @@ public class CarBean {
 	
 	public void allCars(int lastId, String comparator){
 		cars = ServiceFactory.getCarService().getAllCars(lastId, comparator);
+	}
+	
+	public void getCarById(int id){
+		car = ServiceFactory.getCarService().getCarById(id);
 	}
 }

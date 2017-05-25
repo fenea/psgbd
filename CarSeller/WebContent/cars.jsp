@@ -150,7 +150,9 @@
 			
 		</fieldset>
 <div class="container" style="width: 80%">
-	<%{ Car firstCar = carBean.getCars().get(0);
+	<%{ if(carBean.getCars() == null || carBean.getCars().size() == 0)
+			return;
+		Car firstCar = carBean.getCars().get(0);
 		Car lastCar = null;
 		for(Car car : carBean.getCars()){
 			lastCar = car;
@@ -158,7 +160,7 @@
 	<div class="panel panel-default row">
 	    <img class="img-fluid img-thumbnail rounded float-left col-sm-4" src="images/not_available.jpg" style="width: 220px; height: 220px" alt="Chania">
 	  	<div class="float-right col-sm-8">
-		  	<h2><%=car.getTitle()%></h2>
+		  	<h2><a href="cars?id=<%=car.getId()%>"><%=car.getTitle()%></a></h2>
 		  	<p>Make: <%=car.getModel().getMake() %>; Model: <%=car.getModel().getModel() %><br/>
 		  	Year: <%=car.getYear() %>; Mileage: <%=car.getMileage() %>; Engine capacity: <%=car.getMileage() %> <br/>
 		  	Fuel: <%=car.getFuel().getFuel() %>; Color: <%=car.getColor().getColor() %>

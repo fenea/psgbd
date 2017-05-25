@@ -9,4 +9,8 @@ public class CarService {
 	public List<Car> getAllCars(int lastId, String comparator){
 		return carRepo.getAllCars(lastId, comparator);
 	}
+	
+	public Car getCarById(int id){
+		return carRepo.getCarById(id);
+	}
 }
