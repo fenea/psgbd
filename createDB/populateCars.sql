@@ -40,7 +40,7 @@ begin
   engine := TRUNC(DBMS_RANDOM.VALUE(100,6000));
   mileage := TRUNC(DBMS_RANDOM.VALUE(1,1000000));
 
-  insert into cars (id, title, release_year, price, model_id, fuel_type , mileage, body_type_id, color ,engine_capacity,user_id  ) values (ind , surname(nrRand), v_year , price ,carmodel, v_fuel , mileage, v_type, v_color ,engine,userID);
+  insert into cars (id, title, release_year, price, model_id, fuel_type , mileage, body_type_id, color ,engine_capacity,user_id,DOORS_NUMBER  ) values (ind , surname(nrRand), v_year , price ,carmodel, v_fuel , mileage, v_type, v_color ,engine,userID , 4);
    ind:=ind+1;
    exit when ind = 11000;
    end loop;
