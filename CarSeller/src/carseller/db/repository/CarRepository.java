@@ -12,6 +12,7 @@ import carseller.model.BodyType;
 import carseller.model.Car;
 import carseller.model.Fuel;
 import carseller.model.Model;
+import carseller.model.SearchCriterias;
 import carseller.model.Color;
 import oracle.jdbc.OracleTypes;
 import carseller.db.helper.GetIDByInformation;
@@ -19,7 +20,7 @@ import carseller.db.helper.GetInformationByID;
 
 public class CarRepository {
 
-	private Car mapTupleToCar(ResultSet rs) throws SQLException{
+	private static Car mapTupleToCar(ResultSet rs) throws SQLException{
 		Car car = new Car();
 		// covention for parameters
 		car.setId(rs.getInt("id"));
@@ -57,7 +58,7 @@ public class CarRepository {
 	}
 
 
-	public List<Car> searchCars(String string,int page){
+	public static List<Car> searchCars(String string,int page){
 		List<Car> cars = new LinkedList<>();
 		Connection connection = DatabaseConnection.getConnection();
 
@@ -72,7 +73,7 @@ public class CarRepository {
 
 
 			while (rs.next()) {
-				cars.add(this.mapTupleToCar(rs));
+				cars.add(CarRepository.mapTupleToCar(rs));
 			}
 		} catch (SQLException e) {
 
@@ -97,11 +98,11 @@ public class CarRepository {
 					cstmt.setString(1, car.getTitle());
 					cstmt.setInt(2, car.getYear());
 					cstmt.setDouble(3, car.getPrice());
-					cstmt.setInt(4,GetIDByInformation.getModel(car.getMake(),car.getModel()));
-					cstmt.setInt(5,GetIDByInformation.getFuelType(car.getFuel()));
+					cstmt.setInt(4,GetIDByInformation.getModel(car.getModel().getMake(),car.getModel().getModel()));
+					cstmt.setInt(5,GetIDByInformation.getFuelType(car.getFuel().getFuel()));
 					cstmt.setInt(6, car.getMileage());
-					cstmt.setInt(7, GetIDByInformation.getBodyType(car.getBody()));
-					cstmt.setInt(8,GetIDByInformation.getColor(car.getColor()));
+					cstmt.setInt(7, GetIDByInformation.getBodyType(car.getBody().getBodyType()));
+					cstmt.setInt(8,GetIDByInformation.getColor(car.getColor().getColor()));
 					cstmt.setInt(9, car.getEngineCapacity());
 					cstmt.setInt(10, car.getOwner());
 					cstmt.setInt(11, car.getDoorNumber());
