@@ -3,6 +3,7 @@ package carseller.db.repository;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +14,7 @@ import carseller.model.Car;
 import carseller.model.Fuel;
 import carseller.model.Model;
 import carseller.model.SearchCriterias;
+import carseller.properties.Printer;
 import carseller.model.Color;
 import oracle.jdbc.OracleTypes;
 //import carseller.db.helper.GetIDByInformation;
@@ -24,11 +26,11 @@ public class CarRepository {
 		Car car = new Car();
 		// covention for parameters
 		car.setId(rs.getInt("id"));
-		car.setTitle(rs.getString(2));
+		car.setTitle(rs.getString("title"));
 		car.setYear(rs.getInt("release_year"));
 		car.setPrice(rs.getDouble("price"));
 		car.setModel(new Model(rs.getString("make"), rs.getString("model")));
-		car.setFuel(new Fuel(rs.getString(15)));
+		car.setFuel(new Fuel(rs.getString("FUEL_TYPE")));
 		car.setMileage(rs.getInt("mileage"));
 		car.setBody(new BodyType(rs.getString("body_type")));
 		car.setDoorNumber(rs.getInt("doors_number"));
@@ -38,17 +40,26 @@ public class CarRepository {
 		return car;
 	}
 
-	public List<Car> getAllCars(){
+	public List<Car> getAllCars(int lastId, String comparator){
 		List<Car> cars = new LinkedList<>();
 		Connection connection = DatabaseConnection.getConnection();
-		String query = "SELECT * FROM (SELECT * FROM cars c JOIN fuel f ON c.fuel_type = f.id JOIN "
+		String query = "SELECT * FROM (SELECT c.ID, TITLE, RELEASE_YEAR, f.FUEL_TYPE, " 
+								   + "MILEAGE, PRICE, DOORS_NUMBER, ENGINE_CAPACITY, " 
+								   + "c.USER_ID, t.BODY_TYPE, cl.COLOR, MAKE, MODEL "
+								   + "FROM cars c JOIN fuel f ON c.fuel_type = f.id JOIN "
 								   + "types t ON c.body_type_id = t.id JOIN "
 								   + "colors cl ON c.color = cl.id JOIN "
-								   + "models m ON c.model_id = m.id) WHERE ROWNUM < 30";
+								   + "models m ON c.model_id = m.id ";
+		if(lastId == -1)
+			query += "ORDER BY c.ID DESC) WHERE ROWNUM <= 10";
+		else
+			query += "WHERE c.ID " + comparator + lastId + " ORDER BY c.ID DESC " 
+					   + ") WHERE ROWNUM <= 10";
 		try{
 			ResultSet rs = connection.createStatement().executeQuery(query);
+			
 			while(rs.next()){
-				cars.add(this.mapTupleToCar(rs));
+				cars.add(mapTupleToCar(rs));
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -98,19 +109,19 @@ public class CarRepository {
 					cstmt.setString(1, car.getTitle());
 					cstmt.setInt(2, car.getYear());
 					cstmt.setDouble(3, car.getPrice());
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 					/*cstmt.setInt(4,GetIDByInformation.getModel(car.getMake(),car.getModel()));
 					cstmt.setInt(5,GetIDByInformation.getFuelType(car.getFuel()));
 					cstmt.setInt(6, car.getMileage());
 					cstmt.setInt(7, GetIDByInformation.getBodyType(car.getBody()));
-					cstmt.setInt(8,GetIDByInformation.getColor(car.getColor()));*/
+					cstmt.setInt(8,GetIDByInformation.getColor(car.getColor()));
 =======
 					cstmt.setInt(4,GetIDByInformation.getModel(car.getModel().getMake(),car.getModel().getModel()));
 					cstmt.setInt(5,GetIDByInformation.getFuelType(car.getFuel().getFuel()));
 					cstmt.setInt(6, car.getMileage());
 					cstmt.setInt(7, GetIDByInformation.getBodyType(car.getBody().getBodyType()));
 					cstmt.setInt(8,GetIDByInformation.getColor(car.getColor().getColor()));
->>>>>>> 2085dbde3ca146de15aa82e249a747c388a2914f
+//>>>>>>> 2085dbde3ca146de15aa82e249a747c388a2914f*/
 					cstmt.setInt(9, car.getEngineCapacity());
 					cstmt.setInt(10, car.getOwner());
 					cstmt.setInt(11, car.getDoorNumber());

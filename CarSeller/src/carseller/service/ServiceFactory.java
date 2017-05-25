@@ -4,6 +4,7 @@ public class ServiceFactory {
 
 	private static UserService userService;
 	private static PropertiesService propertiesService;
+	private static CarService carService;
 	
 	public static UserService getUserService(){
 		if(userService == null)
@@ -16,5 +17,12 @@ public class ServiceFactory {
 			propertiesService = new PropertiesService();
 		}
 		return propertiesService;
+	}
+	
+	public static CarService getCarService(){
+		if(carService == null){
+			carService = new CarService();
+		}
+		return carService;
 	}
 }

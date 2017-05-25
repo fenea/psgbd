@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import carseller.controller.CarBean;
 import carseller.db.repository.CarRepository;
 import carseller.db.repository.UserRepository;
 import carseller.model.Car;
@@ -36,13 +37,14 @@ public class SearchCarsServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		UserRepository ur = new UserRepository();
-		long start = System.currentTimeMillis();
-		ur.getUserById(3635);
-		long end = System.currentTimeMillis();
-		Printer.printDebugMsg("/searchCar - GET", "Time: " + (end - start));
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		CarBean bean = new CarBean();
+		String str = request.getParameter("page");
+		int id = Integer.parseInt(request.getParameter("lastId"));
+		String comparator = str.equals("prev") ? ">" : "<";
+		Printer.printDebugMsg("searchCar", str + " " + comparator);
+		bean.allCars(id, comparator);
+		request.setAttribute("carBean", bean);
+		request.getRequestDispatcher("cars.jsp").forward(request, response);
 	}
 
 	/**

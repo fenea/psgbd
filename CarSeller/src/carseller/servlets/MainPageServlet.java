@@ -1,26 +1,26 @@
 package carseller.servlets;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import carseller.controller.UserBean;
+import carseller.controller.CarBean;
+import carseller.service.ServiceFactory;
 
 /**
- * Servlet implementation class MainServlet
+ * Servlet implementation class MainPageServlet
  */
 @WebServlet("/main")
-public class MainServlet extends HttpServlet {
+public class MainPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MainServlet() {
+    public MainPageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,15 +29,15 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		UserBean bean = new UserBean();
-		
-		bean.getAllUser(1);
-		
-		request.setAttribute("userBean", bean);
-		request.setAttribute("searchType", "");
-		
-		request.getRequestDispatcher("/main.jsp").forward(request, response);
+		CarBean bean = new CarBean();
+		boolean isLoggedIn = ServiceFactory.getUserService().isAuthenticated(request.getCookies());
+		if(isLoggedIn){
+			//special treatment
+		}else{
+			bean.allCars(-1, "");
+		}
+		request.setAttribute("carBean", bean);
+		request.getRequestDispatcher("cars.jsp").forward(request, response);
 	}
 
 	/**

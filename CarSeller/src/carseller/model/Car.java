@@ -120,7 +120,7 @@ public class Car {
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
-		sb.append(title + " - " + model + " - " + price + " - " + year);
+		sb.append(id + " - " + owner + " - " + title + " - " + model + " - " + price + " - " + year + " - " + fuel.getFuel());
 		return sb.toString();
 	}
 }

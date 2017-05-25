@@ -6,8 +6,16 @@ import carseller.db.repository.CarPropertiesRepository;
 import carseller.db.repository.CarRepository;
 import carseller.model.Car;
 import carseller.model.SearchCriterias;
+import carseller.service.ServiceFactory;
 
 public class CarBean {
+	
+	List<Car> cars;
+	
+	public List<Car> getCars(){
+		return cars;
+	}
+	
 	public  List<String>getMake(){
 
 		List<String> cars = CarPropertiesRepository.getMake();
@@ -24,9 +32,15 @@ public class CarBean {
 		return CarRepository.insertCar(car);
 	}
 	public List<Car> search(SearchCriterias searchCriterias,int page){
-		return CarRepository.getCarsByCriteria(searchCriterias,page);
+		//TODO repair this, fenea!
+		//return CarRepository.getCarsByCriteria(searchCriterias,page);
+		return null;
 	}
 	public Car getCar(int id){
 		return CarRepository.getCar(id);
+	}
+	
+	public void allCars(int lastId, String comparator){
+		cars = ServiceFactory.getCarService().getAllCars(lastId, comparator);
 	}
 }

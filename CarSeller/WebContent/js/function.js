@@ -65,3 +65,11 @@ function addModels(){
 	xhttp.open("GET", url, false);
 	xhttp.send();
 }
+
+function show(){
+	var infoClasses = document.getElementById("more-info").classList;
+	if(infoClasses.contains("display-none"))
+		infoClasses.remove("display-none");
+	else
+		infoClasses.add("display-none");
+}

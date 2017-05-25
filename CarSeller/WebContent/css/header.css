@@ -20,3 +20,9 @@
 .display-none{
 	display: none
 }
+
+.horizontal-center {
+  	margin: auto;
+    width: 60%;
+    padding: 20px;
+}
