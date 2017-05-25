@@ -9,7 +9,7 @@ import carseller.db.DatabaseConnection;
 import oracle.jdbc.OracleTypes;
 
 public class GetIDByInformation {
-	
+
 	public static int getModel(String make, String model ){
 		int id = 0;
 		Connection connection = DatabaseConnection.getConnection();
@@ -17,13 +17,13 @@ public class GetIDByInformation {
 		try{
 			CallableStatement cstmt = null;
 			cstmt = connection.prepareCall(query);
-			
+
 			cstmt.setString(1, make);
 			cstmt.setString(2, model);
 			ResultSet rs = cstmt.executeQuery();
-			
+
 			while(rs.next()){
-				id = rs.getInt(1);	
+				id = rs.getInt(1);
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -31,7 +31,7 @@ public class GetIDByInformation {
 		}
 		return id;
 	}
-	
+
 	static public int getBodyType(String bodyType){
 		int id = 0;
 		Connection connection = DatabaseConnection.getConnection();
@@ -50,19 +50,19 @@ public class GetIDByInformation {
 		}
 		return id;
 	}
-	
+
 	static public int getFuelType(String fuelType){
 		int id = 0;
 		Connection connection = DatabaseConnection.getConnection();
-		String query = "SELECT id from fuel where lower(fuel_type) like lower_fuel(?)" ;
+		String query = "SELECT id from fuel where lower(fuel_type) like lower(?)" ;
 		try{
 			CallableStatement cstmt = null;
 			cstmt = connection.prepareCall(query);
 			cstmt.setString(1, fuelType);
 			ResultSet rs = cstmt.executeQuery();
 			while(rs.next()){
-					id = rs.getInt("id");
-				}
+				id = rs.getInt("id");
+			}
 
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -80,7 +80,7 @@ public class GetIDByInformation {
 			cstmt.setString(1,color);
 			ResultSet rs = cstmt.executeQuery();
 			while(rs.next()){
-					id = rs.getInt("id");
+				id = rs.getInt("id");
 			}
 		}catch(SQLException e){
 			e.printStackTrace();

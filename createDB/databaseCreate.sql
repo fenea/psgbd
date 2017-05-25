@@ -1,44 +1,15 @@
-ALTER TABLE Cars
-drop CONSTRAINT Cars_fk0;
-ALTER TABLE Cars
-drop CONSTRAINT Cars_fk1;
-ALTER TABLE Cars
-drop CONSTRAINT Cars_fk2;
-ALTER TABLE Cars
-drop CONSTRAINT Cars_fk3;
-ALTER TABLE Cars
-drop CONSTRAINT Cars_fk4;
-ALTER TABLE Pictures
-drop CONSTRAINT Pictures_fk0;
-ALTER TABLE Feedback
-drop CONSTRAINT Feedback_fk0;
-ALTER TABLE Feedback
-drop CONSTRAINT Feedback_fk1;
-ALTER TABLE Favourite
-drop CONSTRAINT Favourite_fk0;
-ALTER TABLE Favourite
-drop CONSTRAINT Favourite_fk1;
-ALTER TABLE Comments
-drop CONSTRAINT Comments_fk0;
-ALTER TABLE Comments
-drop CONSTRAINT Comments_fk1;
-ALTER TABLE Preferences
-drop CONSTRAINT Preferences_fk0;
-ALTER TABLE Preferences
-drop CONSTRAINT Preferences_fk1;
-
-DROP TABLE Models;
-drop table history;
-Drop table Cars;
-Drop table Pictures;
-Drop TABLE Users;
-Drop table Feedback;
-Drop table Comments;
-drop table Preferences;
-drop table Favourite;
-drop table types;
-drop table colors;
-drop table fuel;
+DROP TABLE Models CASCADE CONSTRAINTS ;
+drop table history CASCADE CONSTRAINTS ;
+Drop table Cars CASCADE CONSTRAINTS ;
+Drop table Pictures CASCADE CONSTRAINTS ;
+Drop TABLE Users CASCADE CONSTRAINTS ;
+Drop table Feedback CASCADE CONSTRAINTS ;
+Drop table Comments CASCADE CONSTRAINTS ;
+drop table Preferences CASCADE CONSTRAINTS ;
+drop table Favourite CASCADE CONSTRAINTS ;
+drop table types CASCADE CONSTRAINTS ;
+drop table colors CASCADE CONSTRAINTS ;
+drop table fuel CASCADE CONSTRAINTS ;
 
 CREATE TABLE Models (
 	ID NUMBER(9, 0),
@@ -98,7 +69,6 @@ CREATE TABLE Favourite (
 CREATE TABLE Comments (
 	car_id NUMBER(9, 0),
 	author_id NUMBER(9, 0),
-	remarks VARCHAR2(20),
 	comment_date DATE,
 	offensive NUMBER(9, 0),
 	reason varchar2(500)
@@ -142,6 +112,14 @@ CREATE TABLE fuel(
 	id NUMBER(9, 0) PRIMARY KEY,
 	fuel_type VARCHAR2(50)
 );
+ALTER TABLE Users ADD CONSTRAINT users_uniq_username UNIQUE (username);
+ALTER TABLE Users ADD CONSTRAINT users_uniq_email UNIQUE (email);
+
+
+alter table fuel add CONSTRAINT  fuel_uniq unique (fuel_type);
+ALTER table TYPES ADD CONSTRAINT type_uniq UNIQUE (body_type);
+
+ALTER table MODELS add CONSTRAINT models_uniq unique (make,model);
 
 ALTER TABLE Cars ADD CONSTRAINT Cars_fk0 FOREIGN KEY (model_id) REFERENCES Models(ID);
 ALTER TABLE Cars ADD CONSTRAINT Cars_fk1 FOREIGN KEY (user_id) REFERENCES Users(ID);
@@ -165,7 +143,7 @@ ALTER TABLE Preferences ADD CONSTRAINT Preferences_fk1 FOREIGN KEY (model_id) RE
 
 
 
-
+drop SEQUENCE users_seq;
 CREATE  SEQUENCE  users_seq START WITH 1;
 
 CREATE OR REPLACE TRIGGER users_trig
@@ -176,7 +154,7 @@ BEGIN
   INTO   :new.id
   FROM   dual;
 END;
-
+drop SEQUENCE cars_seq;
 CREATE SEQUENCE cars_seq start with 1;
 
 CREATE OR REPLACE TRIGGER cars_trig

@@ -32,7 +32,7 @@ begin
             v_username := lower(v_first_name(i)) || '.' || lower(v_second_name(j));
             v_email := v_username || '@gmail.com';
             v_phone := '0' || v_number;
-            insert into Users values(v_id, v_first_name(i), v_second_name(j), v_username, v_email,v_username, v_phone);
+            insert into users (ID, NAME, FORENAME, USERNAME, EMAIL, PASSWORD, PHONE_NUMBER) values(v_id, v_first_name(i), v_second_name(j), v_username, v_email, rawtohex(dbms_crypto.hash(to_clob(v_username), 3)), v_phone);
             v_number := v_number + 1;
             v_id := v_id + 1;
         end loop;
