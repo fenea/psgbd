@@ -27,7 +27,7 @@ end;
 function signup(name varchar, forename varchar,username varchar, email varchar ,pass varchar , phoneNumber varchar ) return int as
 begin
        /* create sequence SEQUENCE userID INCREMENT BY 1 START WITH 10000 */
-  insert into Users values ( userID.nextval ,  name, forename,username, email , rawtohex(dbms_crypto.hash(to_clob(pass), 3)), phoneNumber);
+  insert into Users (ID, NAME, FORENAME, USERNAME, EMAIL, PASSWORD, PHONE_NUMBER) values ( userID.nextval ,  name, forename,username, email , rawtohex(dbms_crypto.hash(to_clob(pass), 3)), phoneNumber);
   return 1;
 exception
 when DUP_VAL_ON_INDEX then
