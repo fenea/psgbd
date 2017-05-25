@@ -9,6 +9,7 @@ public class UserBean {
 	
 	int countPages;
 	List<User> users;
+	User user;
 	
 	public List<User> getUsers(){
 		return users;
@@ -28,5 +29,9 @@ public class UserBean {
 		UserRepository ur = new UserRepository();
 		countPages = ur.countPageByCriterion(username);
 		users = ur.getAllUsersByUsernameAtPage(pageNumber, username);
+	}
+	
+	public void getUserById(int id){
+		
 	}
 }

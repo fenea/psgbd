@@ -164,6 +164,23 @@ public class UserRepository {
 		return counter;
 	}
 	
+	public User getUserById(int id){
+		String query = "select * from users u join cars c on c.user_id = u.id "
+						+ "join fuel f on f.id = c.fuel_type "
+						+ "join colors co on co.id = c.color " 
+						+ "join types t on t.id = c.body_type_id where u.id = " + id;
+		try {
+			ResultSet rs = connection.prepareCall(query).executeQuery();
+			while(rs.next()){
+				System.out.println(rs.getString(1) + " " + rs.getString(2));
+			}
+		} catch (SQLException e) {
+			Printer.printErrorMsg("UserRepository - getUserById", e);
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public void delete(int id){
 		String query = "DELETE FROM USERS WHERE id = " + id;
 		try {

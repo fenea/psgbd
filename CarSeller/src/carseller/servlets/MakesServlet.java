@@ -18,13 +18,13 @@ import carseller.properties.Printer;
  * Servlet implementation class SearchCarsByCriteriaServlet
  */
 @WebServlet("/makes")
-public class SearchCarsByCriteriaServlet extends HttpServlet {
+public class MakesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchCarsByCriteriaServlet() {
+    public MakesServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

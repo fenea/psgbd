@@ -1,5 +1,7 @@
 package carseller.model;
 
+import java.util.List;
+
 public class Car {
 
 	private int id;
@@ -14,6 +16,8 @@ public class Car {
 	private int doorNumber;
 	private Color color;
 	private int engineCapacity;
+	
+	private List<Comment> comments;
 
 	public int getId() {
 		return id;
@@ -98,6 +102,12 @@ public class Car {
 		this.engineCapacity = engineCapacity;
 	}
 	
+	public List<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
 	
 	@Override
 	public boolean equals (Object o){

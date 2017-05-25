@@ -14,8 +14,8 @@ import carseller.model.Fuel;
 import carseller.model.Model;
 import carseller.model.Color;
 import oracle.jdbc.OracleTypes;
-import carseller.db.helper.GetIDByInformation;
-import carseller.db.helper.GetInformationByID;
+//import carseller.db.helper.GetIDByInformation;
+//import carseller.db.helper.GetInformationByID;
 
 public class CarRepository {
 
@@ -97,11 +97,11 @@ public class CarRepository {
 					cstmt.setString(1, car.getTitle());
 					cstmt.setInt(2, car.getYear());
 					cstmt.setDouble(3, car.getPrice());
-					cstmt.setInt(4,GetIDByInformation.getModel(car.getMake(),car.getModel()));
+					/*cstmt.setInt(4,GetIDByInformation.getModel(car.getMake(),car.getModel()));
 					cstmt.setInt(5,GetIDByInformation.getFuelType(car.getFuel()));
 					cstmt.setInt(6, car.getMileage());
 					cstmt.setInt(7, GetIDByInformation.getBodyType(car.getBody()));
-					cstmt.setInt(8,GetIDByInformation.getColor(car.getColor()));
+					cstmt.setInt(8,GetIDByInformation.getColor(car.getColor()));*/
 					cstmt.setInt(9, car.getEngineCapacity());
 					cstmt.setInt(10, car.getOwner());
 					cstmt.setInt(11, car.getDoorNumber());
@@ -114,7 +114,7 @@ public class CarRepository {
 				return true;
 			}
 
-		public static List<Car> getCarsByCriteria(SearchCriterias searchCriterias,int pageNumber){
+		/*public static List<Car> getCarsByCriteria(SearchCriterias searchCriterias,int pageNumber){
 			List<Car> cars = new LinkedList<>();
 			Connection connection = DatabaseConnection.getConnection();
 
@@ -146,7 +146,7 @@ public class CarRepository {
 				e.printStackTrace();
 			}
 			return cars;
-		}
+		}*/
 		static public Car getCar(int id){
 			Car car = new Car();
 			Connection connection = DatabaseConnection.getConnection();
@@ -160,7 +160,7 @@ public class CarRepository {
 
 
 				while (rs.next()) {
-					car = CarRepository.mapTupleToCar(rs);
+					//car = CarRepository.mapTupleToCar(rs);
 				}
 
 			} catch (SQLException e) {

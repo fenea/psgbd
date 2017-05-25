@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import carseller.db.repository.CarRepository;
+import carseller.db.repository.UserRepository;
 import carseller.model.Car;
+import carseller.properties.Printer;
 
 
 /**
@@ -35,7 +37,12 @@ public class SearchCarsServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		UserRepository ur = new UserRepository();
+		long start = System.currentTimeMillis();
+		ur.getUserById(3635);
+		long end = System.currentTimeMillis();
+		Printer.printDebugMsg("/searchCar - GET", "Time: " + (end - start));
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

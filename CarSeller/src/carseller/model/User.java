@@ -1,5 +1,7 @@
 package carseller.model;
 
+import java.util.List;
+
 public class User {
 	
 	private int id;
@@ -10,6 +12,21 @@ public class User {
 	private String phoneNumber;
 	private String password;
 	
+	private List<Car> cars;
+	private List<Feedback> addressedFeeback; 
+	
+	public List<Car> getCars() {
+		return cars;
+	}
+	public void setCars(List<Car> cars) {
+		this.cars = cars;
+	}
+	public List<Feedback> getAddressedFeeback() {
+		return addressedFeeback;
+	}
+	public void setAddressedFeeback(List<Feedback> addressedFeeback) {
+		this.addressedFeeback = addressedFeeback;
+	}
 	public int getId() {
 		return id;
 	}

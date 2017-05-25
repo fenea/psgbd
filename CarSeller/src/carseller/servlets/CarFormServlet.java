@@ -77,6 +77,7 @@ public class CarFormServlet extends HttpServlet {
 			car.setDoorNumber(Integer.parseInt(str));
 			
 			Printer.printDebugMsg("CarForm - POST", car);
+			//TODO call service for insert car
 		} catch(Exception e){
 			Printer.printErrorMsg("CarForm - POST", e);
 		} 
