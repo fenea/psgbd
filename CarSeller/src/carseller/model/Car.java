@@ -6,6 +6,7 @@ public class Car {
 
 	private int id;
 	private int owner;
+	private String ownerUsername;
 	private String title;
 	private int year;
 	private double price;
@@ -19,6 +20,13 @@ public class Car {
 	
 	private List<Comment> comments;
 
+	public String getOwnerUsername() {
+		return ownerUsername;
+	}
+	public void setOwnerUsername(String ownerUsername) {
+		this.ownerUsername = ownerUsername;
+	}
+	
 	public int getId() {
 		return id;
 	}

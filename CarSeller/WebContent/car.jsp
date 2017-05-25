@@ -25,8 +25,9 @@
 <div class="container-width container-fluid container-distance">
 	<div class="jumbotron">
 	
-	<h2 class="text-center">Car form</h2>
+	<h2 class="text-center"><%=carBean.getCar().getTitle() %></h2>
 		  	<form action="CarForm" method="post" style="padding-top: 30px">
+		  		<p>Author: <a href = "#"><%=carBean.getCar().getOwnerUsername() %></a></p>
 			    <div class="form-inline" >
 			    	<div class="form-group col-xs-6" style="padding: 0">
 			    	<label for="make">Select make:</label>

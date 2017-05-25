@@ -57,6 +57,7 @@ public class CarRepository {
 			if(!rs.next())
 				return car;
 			car = mapTupleToCar(rs);
+			car.setOwnerUsername(rs.getString("username"));
 			rs.close();
 		}catch(SQLException e){
 			e.printStackTrace();
