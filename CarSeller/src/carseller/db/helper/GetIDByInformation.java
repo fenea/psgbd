@@ -88,5 +88,24 @@ public class GetIDByInformation {
 		}
 		return id;
 	}
+	static public int getOwner(String username){
+		int id = 0;
+		Connection connection = DatabaseConnection.getConnection();
+		String query = "SELECT ID from users where lower(username) like lower(?)" ;
+		try{
+			CallableStatement cstmt = null;
+			cstmt = connection.prepareCall(query);
+			cstmt.setString(1,username);
+			ResultSet rs = cstmt.executeQuery();
+			while(rs.next()){
+					id = rs.getInt("id");
+					System.out.println(id + "");
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+			System.out.println("get  owner id exception at db");
+		}
+		return id;
+	}
 
 }
