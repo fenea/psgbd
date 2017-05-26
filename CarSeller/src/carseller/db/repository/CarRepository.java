@@ -17,8 +17,8 @@ import carseller.model.SearchCriterias;
 import carseller.properties.Printer;
 import carseller.model.Color;
 import oracle.jdbc.OracleTypes;
-//import carseller.db.helper.GetIDByInformation;
-//import carseller.db.helper.GetInformationByID;
+import carseller.db.helper.GetIDByInformation;
+import carseller.db.helper.GetInformationByID;
 
 public class CarRepository {
 
@@ -41,12 +41,12 @@ public class CarRepository {
 	}
 
 	public Car getCarById(int id){
-		String query = "select c.ID, TITLE, RELEASE_YEAR, f.FUEL_TYPE, " 
-							+ "MILEAGE, PRICE, DOORS_NUMBER, ENGINE_CAPACITY, " 
+		String query = "select c.ID, TITLE, RELEASE_YEAR, f.FUEL_TYPE, "
+							+ "MILEAGE, PRICE, DOORS_NUMBER, ENGINE_CAPACITY, "
 							+ "c.USER_ID, t.BODY_TYPE, co.COLOR, MAKE, MODEL, "
 							+ "u.USERNAME from users u join cars c on c.user_id = u.id "
 							+ "join fuel f on f.id = c.fuel_type "
-							+ "join colors co on co.id = c.color " 
+							+ "join colors co on co.id = c.color "
 							+ "join types t on t.id = c.body_type_id "
 							+ "join models m on m.id = c.model_id "
 							+ "where c.id = " + id;
@@ -65,12 +65,12 @@ public class CarRepository {
 		}
 		return car;
 	}
-	
+
 	public List<Car> getAllCars(int lastId, String comparator){
 		List<Car> cars = new LinkedList<>();
 		Connection connection = DatabaseConnection.getConnection();
-		String query = "SELECT * FROM (SELECT c.ID, TITLE, RELEASE_YEAR, f.FUEL_TYPE, " 
-								   + "MILEAGE, PRICE, DOORS_NUMBER, ENGINE_CAPACITY, " 
+		String query = "SELECT * FROM (SELECT c.ID, TITLE, RELEASE_YEAR, f.FUEL_TYPE, "
+								   + "MILEAGE, PRICE, DOORS_NUMBER, ENGINE_CAPACITY, "
 								   + "c.USER_ID, t.BODY_TYPE, cl.COLOR, MAKE, MODEL "
 								   + "FROM cars c JOIN fuel f ON c.fuel_type = f.id JOIN "
 								   + "types t ON c.body_type_id = t.id JOIN "
@@ -79,11 +79,11 @@ public class CarRepository {
 		if(lastId == -1)
 			query += "ORDER BY c.ID DESC) WHERE ROWNUM <= 10";
 		else
-			query += "WHERE c.ID " + comparator + lastId + " ORDER BY c.ID DESC " 
+			query += "WHERE c.ID " + comparator + lastId + " ORDER BY c.ID DESC "
 					   + ") WHERE ROWNUM <= 10";
 		try{
 			ResultSet rs = connection.createStatement().executeQuery(query);
-			
+
 			while(rs.next()){
 				cars.add(mapTupleToCar(rs));
 			}
@@ -193,6 +193,40 @@ public class CarRepository {
 			}
 			return cars;
 		}*/
+		public static List<Car> getCarsByCriteria(SearchCriterias searchCriterias,int pageNumber){
+			List<Car> cars = new LinkedList<>();
+			Connection connection = DatabaseConnection.getConnection();
+
+			try {
+				CallableStatement cs = connection.prepareCall("{ call ? := QUERYCARS.LIST_CARS(?, ?,?,?,?,?,?) }");
+				cs.setInt(2, searchCriterias.getMinPrice());
+				cs.setInt(3, searchCriterias.getMaxPrice());
+				cs.setInt(4, searchCriterias.getMinMileage());
+				cs.setInt(5, searchCriterias.getMaxMileage());
+				cs.setInt(6, searchCriterias.getMinEngineCapacity());
+				cs.setInt(7, searchCriterias.getMaxEngineCapacity());
+				cs.setString(8,searchCriterias.getMake());
+				cs.setString(9, searchCriterias.getModel());
+				cs.setString(10, searchCriterias.getBody());
+				cs.setString(11,searchCriterias.getColor());
+				cs.setString(12, searchCriterias.getFuel());
+				cs.setInt(13, pageNumber);
+				cs.registerOutParameter(1, OracleTypes.CURSOR);
+				cs.executeUpdate();
+				ResultSet rs = (ResultSet) cs.getObject(1);
+
+
+				while (rs.next()) {
+					cars.add(CarRepository.mapTupleToCar(rs));
+				}
+
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+			return cars;
+		}
+
 		static public Car getCar(int id){
 			Car car = new Car();
 			Connection connection = DatabaseConnection.getConnection();

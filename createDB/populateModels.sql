@@ -634,4 +634,5 @@ insert into models values(631,'Isuzu','Ascender');
 /
 COMMIT /
 
-create materialized view manufacturers as select distinct make from models;
+create materialized view manufacturers  /* REFRESH FAST FOR UPDATE */
+as select distinct make from models;

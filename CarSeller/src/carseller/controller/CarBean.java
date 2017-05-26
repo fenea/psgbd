@@ -9,18 +9,18 @@ import carseller.model.SearchCriterias;
 import carseller.service.ServiceFactory;
 
 public class CarBean {
-	
+
 	List<Car> cars;
 	Car car;
-	
+
 	public List<Car> getCars(){
 		return cars;
 	}
-	
+
 	public Car getCar(){
 		return car;
 	}
-	
+
 	public  List<String>getMake(){
 
 		List<String> cars = CarPropertiesRepository.getMake();
@@ -31,25 +31,26 @@ public class CarBean {
 
 		return CarRepository.searchCars(search, page);
 
-	}
-
-	public boolean insertCar(Car car){
-		return CarRepository.insertCar(car);
+	}s
+	public boolean insertCar(Car car,username){
+		// TODO add username to from servlet
+		return CarRepository.insertCar(car, username);
 	}
 	public List<Car> search(SearchCriterias searchCriterias,int page){
-		//TODO repair this, fenea!
-		//return CarRepository.getCarsByCriteria(searchCriterias,page);
-		return null;
+
+		return CarRepository.getCarsByCriteria(searchCriterias,page);
+
 	}
 	public Car getCar(int id){
 		return CarRepository.getCar(id);
 	}
-	
+
 	public void allCars(int lastId, String comparator){
 		cars = ServiceFactory.getCarService().getAllCars(lastId, comparator);
 	}
-	
+
 	public void getCarById(int id){
 		car = ServiceFactory.getCarService().getCarById(id);
 	}
+}
 }
