@@ -48,7 +48,7 @@ function validateForm(){
 function addModels(){
 	var makeComboBox = document.getElementById("make");
 	var currentVal = makeComboBox.options[makeComboBox.selectedIndex].value;
-	
+	alert("WORKS");
 	var xhttp = new XMLHttpRequest();
 	var url = "makes?make=" + encodeURI(currentVal);
 	xhttp.onreadystatechange = function() {

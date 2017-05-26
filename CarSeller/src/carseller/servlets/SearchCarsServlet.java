@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import carseller.controller.CarBean;
+import carseller.controller.ModelBean;
 import carseller.db.repository.CarRepository;
 import carseller.db.repository.UserRepository;
 import carseller.model.Car;
@@ -43,6 +44,8 @@ public class SearchCarsServlet extends HttpServlet {
 		String comparator = str.equals("prev") ? ">" : "<";
 		Printer.printDebugMsg("searchCar", str + " " + comparator);
 		bean.allCars(id, comparator);
+		ModelBean mb = new ModelBean();
+		request.setAttribute("modelBean", mb);
 		request.setAttribute("carBean", bean);
 		request.getRequestDispatcher("cars.jsp").forward(request, response);
 	}
@@ -51,7 +54,7 @@ public class SearchCarsServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Car> cars = new ArrayList<Car>();
+		/*List<Car> cars = new ArrayList<Car>();
 		
 		 String string;
 		 int page;
@@ -83,8 +86,8 @@ public class SearchCarsServlet extends HttpServlet {
 			else
 				response.sendRedirect("searchCar.jsp?message=" + URLEncoder.encode("no cars found", "UTF-8"));
 			
-			doGet(request, response);
-	
+			doGet(request, response);*/
+		Printer.printDebugMsg("/searchCar - POST", request.getParameter("make"));
 	}
 
 }

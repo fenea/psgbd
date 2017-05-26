@@ -6,6 +6,7 @@
 <html>
 <head>
 <jsp:useBean id="carBean" class="carseller.controller.CarBean" scope="request"></jsp:useBean>
+<jsp:useBean id="modelBean" class="carseller.controller.ModelBean" scope="request"></jsp:useBean>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +37,7 @@
 <fieldset>
 			<legend></legend>
 
-			<form action="searchCar" method="GET">
+			<form action="searchCar" method="POST">
 				<div class="row horizontal-center">
 					<div class="input-group">
 					    <input type="text" class="form-control" placeholder="Search">
@@ -53,6 +54,11 @@
 			    	<label for="make">Select make:</label>
 			    	<select class="form-control" id="make" name="make" style="width: 300px" onchange="addModels()">
 			    		<option></option>
+			    		<%
+						for (String carMake : modelBean.getAllMakes()) {
+						%>
+							<option > <%=carMake%></option>
+						<%}%>
 			    		
 			    	</select>
 			    	</div>

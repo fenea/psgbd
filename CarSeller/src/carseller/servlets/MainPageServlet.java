@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import carseller.controller.CarBean;
+import carseller.controller.ModelBean;
 import carseller.service.ServiceFactory;
 
 /**
@@ -36,6 +37,8 @@ public class MainPageServlet extends HttpServlet {
 		}else{
 			bean.allCars(-1, "");
 		}
+		ModelBean mb = new ModelBean();
+		request.setAttribute("modelBean", mb);
 		request.setAttribute("carBean", bean);
 		request.getRequestDispatcher("cars.jsp").forward(request, response);
 	}
