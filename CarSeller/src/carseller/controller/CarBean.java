@@ -31,7 +31,7 @@ public class CarBean {
 
 		return CarRepository.searchCars(search, page);
 
-	}s
+	}
 	public boolean insertCar(Car car,username){
 		// TODO add username to from servlet
 		return CarRepository.insertCar(car, username);
